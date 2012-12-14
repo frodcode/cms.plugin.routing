@@ -8,7 +8,25 @@ import domain.routing.ModuleControl;
 class FrontController {
 
 	def routingService;
+	
+	def callExecutor;
 
+	def route() {
+		def page = routingService.findPageByRequest(this.request);
+		def viewModel = [:]
+		viewModel += callExecutor.executeCalls(page, request, params);
+		prinln viewModel.dump()
+		def registredMc = [:]
+		page.pageType.moduleControls.each {mc->
+			registredMc[mc.slug] = applicationContext.getBean(mc.className)
+		}
+
+		viewModel['mc'] = registredMc
+		viewModel['page'] = page
+		return new ModelAndView(page.pageType.templateName, viewModel)
+	}
+
+	/*
 	def route() {
 		def page = routingService.findPageByRequest(this.request);
 		def viewModel = [:]
@@ -41,4 +59,5 @@ class FrontController {
 		def newRequest = new Request(full: request, params: requestParams);
 		return newRequest;
 	}
+*/
 }

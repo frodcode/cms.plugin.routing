@@ -45,6 +45,7 @@ Brief summary/description of the plugin.
 
     def doWithSpring = {
         routingService(routing.RoutingService)
+		callExecutor(module.CallExecutor)
 		'example.NewsModuleControl'(example.NewsModuleControl)
 		'example.ArticleModuleControl'(example.ArticleModuleControl)
     }
