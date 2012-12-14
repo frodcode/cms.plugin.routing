@@ -1,6 +1,9 @@
 package routing
 
+import module.Request
 import org.springframework.web.servlet.ModelAndView
+
+import domain.routing.ModuleControl;
 
 class FrontController {
 
@@ -11,9 +14,10 @@ class FrontController {
 		def viewModel = [:]
 		page.pageType.registeredCalls.each { el ->
 			def moduleControl = applicationContext.getBean(el.moduleControl.className);
+			def moduleRequest = this.getRequestFor(el.moduleControl);
 			def subViewModel = moduleControl.{
 						el.methodName
-					}(page)
+					}(page, moduleRequest)
 			viewModel += subViewModel
 		}
 		def registredMc = [:]
@@ -23,5 +27,18 @@ class FrontController {
 		viewModel['mc'] = registredMc
 		viewModel['page'] = page
 		return new ModelAndView(page.pageType.templateName, viewModel)
+	}
+	
+	private def getRequestFor(ModuleControl moduleControl) {
+		def requestParams = [:]
+		params.each { key, value -> 
+			def idParam = moduleControl.slug + '_';
+			if (key.toString().startsWith(idParam)) {
+				def newKey = key.toString().replace(idParam, '')
+				requestParams[newKey] = value
+			}
+		}
+		def newRequest = new Request(full: request, params: requestParams);
+		return newRequest;
 	}
 }

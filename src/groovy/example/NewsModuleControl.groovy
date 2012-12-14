@@ -2,8 +2,7 @@ package example
 
 class NewsModuleControl {
 	
-	public def loadNews(def page) {
-		println page.id
+	public def loadNews(def page, def moduleRequest) {
 		if (page.urlPart == '/') {
 			return	 [news: ['super truper', 'Extra homepage new']]
 		}

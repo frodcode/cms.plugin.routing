@@ -3,7 +3,7 @@ package example
 class ArticleModuleControl {
 
 	
-	public def getArticleText()
+	public def getArticleText(def request, def response)
 	{
 		return 'Lorem ipsum integer float digit imposi elf'
 	}
