@@ -1,9 +1,10 @@
 package routing
 
+import javax.servlet.http.HttpServletRequest
+
 import domain.routing.HttpMethodEnum
 import domain.routing.Page
 import domain.routing.RequestTypeEnum
-import javax.servlet.http.HttpServletRequest;
 
 class RoutingService {
 
@@ -38,6 +39,11 @@ class RoutingService {
 	{
 		def page = Page.find("FROM Page as p WHERE p.url = :url AND p.httpMethod = :httpMethod AND p.requestType = :requestType", 
 			[url: getCompleteUrl(requestObject), httpMethod: getHttpMethodByRequest(requestObject), requestType: getRequestTypeByRequest(requestObject)]);
+		return page
+	}
+	
+	public Page findPageBySingletonType(String type) {
+		Page page = Page.find("FROM Page as p WHERE p.pageType.slug = :type AND p.pageType.singleton = :singleton", [type: type, singleton: true])		
 		return page
 	}
 }

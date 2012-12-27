@@ -3,17 +3,25 @@ package module
 import domain.routing.ModuleControl;
 import domain.routing.Page
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.*
+
 class CallExecutor {
 	
-	public def executeCalls(Page page, controllerRequest, controllerParams) {
+	
+	public def executeCalls(ApplicationContext applicationContext, Page page, controllerRequest, controllerParams) {
 		def viewModel = [:]
-		page.pageType.registeredCalls.each { el ->
+		page.pageType.registeredCalls.each { el ->			
+			if (!viewModel[el.moduleControl.slug]) {
+				viewModel[el.moduleControl.slug] = [:]
+				viewModel[el.moduleControl.slug]['vars'] = [:]
+			}
 			def moduleControl = applicationContext.getBean(el.moduleControl.className);
 			def moduleRequest = this.getRequestFor(el.moduleControl, controllerRequest, controllerParams);
 			def subViewModel = moduleControl.{
 						el.methodName
 					}(page, moduleRequest)
-			viewModel += subViewModel
+			viewModel[el.moduleControl.slug]['vars'] += subViewModel
 		}
 		return viewModel
 	}
@@ -30,5 +38,5 @@ class CallExecutor {
 		def newRequest = new Request(full: controllerRequest, params: requestParams);
 		return newRequest;
 	}
-	
+
 }

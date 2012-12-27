@@ -14,14 +14,14 @@ class FrontController {
 	def route() {
 		def page = routingService.findPageByRequest(this.request);
 		def viewModel = [:]
-		viewModel += callExecutor.executeCalls(page, request, params);
-		prinln viewModel.dump()
+		viewModel += callExecutor.executeCalls(applicationContext, page, request, params);
 		def registredMc = [:]
 		page.pageType.moduleControls.each {mc->
-			registredMc[mc.slug] = applicationContext.getBean(mc.className)
+			if (!viewModel[mc.slug]) {
+				viewModel[mc.slug] = [:]
+			}
+			viewModel[mc.slug]['mc'] = applicationContext.getBean(mc.className) 
 		}
-
-		viewModel['mc'] = registredMc
 		viewModel['page'] = page
 		return new ModelAndView(page.pageType.templateName, viewModel)
 	}

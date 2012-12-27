@@ -32,14 +32,34 @@ class Page {
 		langPart (nullable: true)
 	}
 	
+	public String getLinkTo(Page page) {
+		def selfHostDomain = getFinalHost().getFullHostDomain()
+		def linkHostDomain = page.getFinalHost().getFullHostDomain()
+		if (selfHostDomain != linkHostDomain) {
+			return url
+		}		
+		return getRelativeLink()
+	}
+ 	
+	public String getRelativeLink() {
+		return getFinalHost().domainUrlPart + getFullUrlPart()
+	}
+	
+	
 	public Host getFinalHost() {
 		if (!host) {
 			if (!parent) {
 				throw new IllegalStateException('At least parent has to have host defined');
 			}
-			return parent.getHost();
+			return parent.getFinalHost();
 		}
 		return host;
+	}
+	
+	public void setUrlPartFromText(def s)
+	{
+		def normalized = s.toLowerCase().replaceAll(/[^A-z0-9 ]/, "").replaceAll(/ +/, "-")
+		this.setUrlPart('/' + normalized)
 	}
 
 	private void checkThereIsParent() {
@@ -139,6 +159,9 @@ class Page {
 	
 	def beforeValidate() {
 		setDefaults()
+		println this.urlPart
+		println 'before validate'
+		println this.httpMethod
 		regenerateUrl()
 	}
 
