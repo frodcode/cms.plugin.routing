@@ -15,12 +15,18 @@ class CallExecutor {
 			if (!viewModel[el.moduleControl.slug]) {
 				viewModel[el.moduleControl.slug] = [:]
 				viewModel[el.moduleControl.slug]['vars'] = [:]
+				viewModel[el.moduleControl.slug]['responses'] = []
 			}
 			def moduleControl = applicationContext.getBean(el.moduleControl.className);
 			def moduleRequest = this.getRequestFor(el.moduleControl, controllerRequest, controllerParams);
+			def moduleResponse = new Response()
 			def subViewModel = moduleControl.{
 						el.methodName
-					}(page, moduleRequest)
+					}(page, moduleRequest, moduleResponse)
+			moduleResponse.calls.each { it ->
+				it(moduleResponse);
+			}
+			viewModel[el.moduleControl.slug].responses.add(moduleResponse)
 			viewModel[el.moduleControl.slug]['vars'] += subViewModel
 		}
 		return viewModel

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest
 
 import domain.routing.HttpMethodEnum
 import domain.routing.Page
+import domain.routing.PageType;
 import domain.routing.RequestTypeEnum
 
 class RoutingService {
@@ -42,8 +43,12 @@ class RoutingService {
 		return page
 	}
 	
-	public Page findPageBySingletonType(String type) {
+	public Page getSingleton(String type) {
 		Page page = Page.find("FROM Page as p WHERE p.pageType.slug = :type AND p.pageType.singleton = :singleton", [type: type, singleton: true])		
 		return page
+	}
+	
+	public PageType getSingletonType(String type) {
+		return PageType.findBySlug(type)
 	}
 }
