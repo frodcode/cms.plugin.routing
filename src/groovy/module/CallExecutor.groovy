@@ -1,35 +1,36 @@
 package module
 
-import domain.routing.ModuleControl;
-import domain.routing.Page
-
-import org.springframework.beans.BeansException;
 import org.springframework.context.*
+
+import domain.routing.ModuleControl
+import domain.routing.Page
 
 class CallExecutor {
 	
 	
 	public def executeCalls(ApplicationContext applicationContext, Page page, controllerRequest, controllerParams) {
-		def viewModel = [:]
-		page.pageType.registeredCalls.each { el ->			
-			if (!viewModel[el.moduleControl.slug]) {
-				viewModel[el.moduleControl.slug] = [:]
-				viewModel[el.moduleControl.slug]['vars'] = [:]
-				viewModel[el.moduleControl.slug]['responses'] = []
-			}
-			def moduleControl = applicationContext.getBean(el.moduleControl.className);
-			def moduleRequest = this.getRequestFor(el.moduleControl, controllerRequest, controllerParams);
+		def callViewModels = []
+		page.pageType.registeredCalls.each { moduleCall ->		
+			def callViewModel = new CallViewModel()	
+
+			def moduleControl = applicationContext.getBean(moduleCall.moduleControl.className);
+			def moduleRequest = this.getRequestFor(moduleCall.moduleControl, controllerRequest, controllerParams);
 			def moduleResponse = new Response()
-			def subViewModel = moduleControl.{
-						el.methodName
+			def vars = moduleControl.{
+						moduleCall.methodName
 					}(page, moduleRequest, moduleResponse)
+			if (vars instanceof Map) {
+				callViewModel.setVars(vars)
+			}
 			moduleResponse.calls.each { it ->
 				it(moduleResponse, moduleRequest, page);
 			}
-			viewModel[el.moduleControl.slug].responses.add(moduleResponse)
-			viewModel[el.moduleControl.slug]['vars'] += subViewModel
+			callViewModel.response = moduleResponse
+			callViewModel.page = page
+			callViewModel.moduleCall = moduleCall
+			callViewModels.add(callViewModel)
 		}
-		return viewModel
+		return callViewModels
 	}
 	
 	private def getRequestFor(ModuleControl moduleControl, controllerRequest, controllerParams) {

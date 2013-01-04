@@ -1,10 +1,11 @@
 package module
 
 import domain.routing.Page
+import domain.routing.RegisteredCall;
 
 class CallViewModel {
 
-	def moduleControlSlug
+	RegisteredCall moduleCall
 	
 	def vars = [:]
 	
