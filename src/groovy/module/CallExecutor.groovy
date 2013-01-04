@@ -24,7 +24,7 @@ class CallExecutor {
 						el.methodName
 					}(page, moduleRequest, moduleResponse)
 			moduleResponse.calls.each { it ->
-				it(moduleResponse);
+				it(moduleResponse, moduleRequest, page);
 			}
 			viewModel[el.moduleControl.slug].responses.add(moduleResponse)
 			viewModel[el.moduleControl.slug]['vars'] += subViewModel

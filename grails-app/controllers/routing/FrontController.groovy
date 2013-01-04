@@ -17,7 +17,6 @@ class FrontController {
 		viewModel += callExecutor.executeCalls(applicationContext, page, request, params);
 		println viewModel
 		if (viewModel) {
-			println viewModel.article.responses + ' - asfdasdf'
 			viewModel.article.responses.each {
 				if (it.redirects) {
 					redirect(uri: it.redirects[0])

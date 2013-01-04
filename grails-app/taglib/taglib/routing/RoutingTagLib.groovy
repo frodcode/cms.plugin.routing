@@ -25,17 +25,46 @@ class RoutingTagLib {
 	
 	/**
 	 * @attr page REQUIRED
+	 * @attr params
 	 */
 	def link = {attrs, body ->
 		def page = attrs.page
+		def params = attrs.params
 		def currentPage = pageScope.page;
-		def url = page.url
+		if (params && !params instanceof Map) {
+			throw new IllegalArgumentException('Params for link must be instance of Map where first level key is control name and second is map of parameters')
+		}		
+		def url = ''
 		if (!page) {
 			url = 'Error: you must provide page to the link'
+		} else {
+			url = page?.getLinkTo(currentPage)
+			params.each { it->
+				if (it.value instanceof Map == false) {
+					throw new IllegalArgumentException(sprintf('Params for link of control "%s" must be instance of Map. E.g. [controlName:[id:4]]', it.key))
+				}
+				url = getUrlWithParams(it.value, it.key, url)
+			}		
 		}
 		def attrString = getAllAttrsAsString(attrs)
-		out << "<a href='${page.getLinkTo(currentPage)}'${attrString}>"+body()+'</a>'
+		out << "<a href='${url}'${attrString}>"+body()+'</a>'
 	}	
+	
+	private def getUrlWithParams(Map hashMap, String control, String currentUrl) {
+		if (!hashMap) {
+			return ''
+		}
+		def linkParams = ''
+		if (!currentUrl.contains('?')) {
+			linkParams += '?'
+		}		
+		hashMap.each { it ->
+			linkParams += control+'_'+it.key + '=' + it.value + '&amp;'
+		}
+		println linkParams + '-----------'
+		linkParams = linkParams[0..-6]
+		return currentUrl + linkParams
+	}
 	
 	private def getElementName(moduleControls, name) {
 		def nameString = ''
