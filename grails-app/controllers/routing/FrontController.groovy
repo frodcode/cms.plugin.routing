@@ -10,6 +10,8 @@ class FrontController {
 
 	def callExecutor;
 
+	static layout = 'main'
+
 	def route() {
 		def page = routingService.findPageByRequest(this.request);
 		def callViewModels = []

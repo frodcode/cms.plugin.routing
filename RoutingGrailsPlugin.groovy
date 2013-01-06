@@ -1,3 +1,5 @@
+import domain.routing.*;
+
 class RoutingGrailsPlugin {
     // the plugin version
     def version = "0.1"
@@ -75,5 +77,55 @@ Brief summary/description of the plugin.
     def onShutdown = { event ->
         // TODO Implement code that is executed when the application shuts down (optional)
     }
+	
+	public static def loadFixtures(def ctx, defaultHost) {
+		def moduleControls = [
+			ModuleControl routingMc = new ModuleControl(
+			className: routing.control.RoutingModuleControl.class.getName(),
+			slug: 'routing'
+			),
+		]
+		moduleControls*.save();
+
+		def pageTypes = [
+			homepagePageType : new PageType(
+			slug : 'homepage',
+			description: 'Domovská stránka',
+			singleton: true,
+			templateName: '/article/front/homepage',
+			moduleControls: moduleControls,
+			registeredCalls : []),
+			adminHomepagePageType : new PageType(
+			slug : 'admin_homepage',
+			description: 'Admin article page',
+			singleton: true,
+			templateName: '/article/admin/homepage',
+			moduleControls: moduleControls,
+			registeredCalls : []),
+		]
+		pageTypes*.value*.save();
+
+		def pages = [
+			homepage : new Page(
+			host: defaultHost,
+			urlPart: '/',
+			urlType: UrlTypeEnum.FROM_PARENT,
+			requestType: RequestTypeEnum.REGULAR,
+			httpMethod: HttpMethodEnum.GET,
+			pageType: pageTypes.homepagePageType
+			),
+
+			adminHomepage : new Page(
+			host: defaultHost,
+			urlPart: '/admin',
+			urlType: UrlTypeEnum.FROM_PARENT,
+			requestType: RequestTypeEnum.REGULAR,
+			httpMethod: HttpMethodEnum.GET,
+			pageType: pageTypes.adminHomepagePageType
+			),
+		]
+		pages*.value*.save();
+		return [pages: pages, moduleControls: [routingMc:routingMc]]
+	}
 	
 }
