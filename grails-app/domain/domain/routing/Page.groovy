@@ -1,29 +1,31 @@
 package domain.routing
 
+import routing.domain.auth.AuthRole
+
 class Page {
 
 	Host host
-	
+
 	String urlPart
-	
+
 	String langPart
-	
+
 	UrlTypeEnum urlType
-	
+
 	String url
-	
+
 	HttpMethodEnum httpMethod
-	
+
 	RequestTypeEnum requestType
-	
+
 	PageType pageType
-	
+
 	Page parent
-	
+
 	static mappedBy = [parent: Page]
-	
-	static hasMany = [subPages: Page]
-	
+
+	static hasMany = [subPages: Page, authRoles: AuthRole]
+
 	static constraints = {
 		parent(nullable : true)
 		host(nullable: true)
@@ -31,21 +33,21 @@ class Page {
 		url(unique: ['httpMethod', 'requestType'])
 		langPart (nullable: true)
 	}
-	
+
 	public String getLinkTo(Page page) {
 		def selfHostDomain = getFinalHost().getFullHostDomain()
 		def linkHostDomain = page.getFinalHost().getFullHostDomain()
 		if (selfHostDomain != linkHostDomain) {
 			return url
-		}		
+		}
 		return getRelativeLink()
 	}
- 	
+
 	public String getRelativeLink() {
 		return getFinalHost().domainUrlPart + getFullUrlPart()
 	}
-	
-	
+
+
 	public Host getFinalHost() {
 		if (!host) {
 			if (!parent) {
@@ -55,9 +57,8 @@ class Page {
 		}
 		return host;
 	}
-	
-	public void setUrlPartFromText(def s)
-	{
+
+	public void setUrlPartFromText(def s) {
 		def normalized = s.toLowerCase().replaceAll(/[^A-z0-9 ]/, "").replaceAll(/ +/, "-")
 		this.setUrlPart('/' + normalized)
 	}
@@ -67,15 +68,14 @@ class Page {
 			throw new ParentNotFoundException('You must define parent if you want to use automatic property filling by parent')
 		}
 	}
-	
-	public boolean isRoot()
-	{
+
+	public boolean isRoot() {
 		if (parent) {
 			return false;
 		}
 		return true
 	}
-	
+
 	public Page getRoot() {
 		def currentParent = this
 		while(currentParent.parent) {
@@ -83,7 +83,7 @@ class Page {
 		}
 		return currentParent;
 	}
-	
+
 	private String getRootLangPart() {
 		Page root = getRoot()
 		return root.langPart ? root.langPart : ''
@@ -102,7 +102,7 @@ class Page {
 			child.regenerateUrl();
 		}
 	}
-	
+
 	public String getFullUrlPart() {
 		Page ancestor;
 		if (isRoot()) {
@@ -131,9 +131,9 @@ class Page {
 		}
 		if (urlType == UrlTypeEnum.FROM_ROOT) {
 			regenerateUrlFromRoot()
-		}		
+		}
 	}
-	
+
 	private void checkValues() {
 		if (!urlPart.startsWith('/')) {
 			throw new IllegalStateException('Url part must start with / char')
@@ -156,7 +156,7 @@ class Page {
 			requestType = RequestTypeEnum.REGULAR
 		}
 	}
-	
+
 	def beforeValidate() {
 		setDefaults()
 		println this.urlPart
@@ -168,10 +168,9 @@ class Page {
 	def beforeInsert() {
 		checkValues()
 	}
-	
+
 	def beforeUpdate() {
-		checkValues()		
+		checkValues()
 	}
-	
 }
 

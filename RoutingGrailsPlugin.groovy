@@ -46,10 +46,13 @@ Brief summary/description of the plugin.
     }
 
     def doWithSpring = {
-        routingService(routing.RoutingService)
-		callExecutor(module.CallExecutor)
+        routingService(routing.RoutingService)	
+		callExecutor(module.CallExecutor) 
 		'routing.control.RoutingModuleControl'(routing.control.RoutingModuleControl) {
 			routingService = ref('routingService');
+		}
+		'routing.auth.AuthModuleControl'(routing.auth.AuthModuleControl) {
+			
 		}
 		'example.NewsModuleControl'(example.NewsModuleControl)
 		'example.ArticleModuleControl'(example.ArticleModuleControl)
@@ -79,6 +82,7 @@ Brief summary/description of the plugin.
     }
 	
 	public static def loadFixtures(def ctx, defaultHost) {
+		def atuhModuleControl = ctx.authModuleControl
 		def moduleControls = [
 			ModuleControl routingMc = new ModuleControl(
 			className: routing.control.RoutingModuleControl.class.getName(),
@@ -90,21 +94,37 @@ Brief summary/description of the plugin.
 		def pageTypes = [
 			homepagePageType : new PageType(
 			slug : 'homepage',
-			description: 'Domovská stránka',
+			description: 'Homepage',
 			singleton: true,
-			templateName: '/article/front/homepage',
+			templateName: '/routing/front/homepage',
 			moduleControls: moduleControls,
 			registeredCalls : []),
+		
 			adminHomepagePageType : new PageType(
 			slug : 'admin_homepage',
 			description: 'Admin article page',
 			singleton: true,
-			templateName: '/article/admin/homepage',
+			templateName: '/routing/admin/homepage',
+			moduleControls: moduleControls,
+			registeredCalls : []),
+		
+			loginPageType : new PageType(
+			slug : atuhModuleControl.loginSlug,
+			description: 'Admin login page',
+			singleton: true,
+			templateName: '/routing/admin/login',
+			moduleControls: moduleControls,
+			registeredCalls : []),
+		
+			doLoginPageType : new PageType(
+			slug : atuhModuleControl.doLoginSlug,
+			description: 'Admin confirm login',
+			singleton: true,
+			templateName: '/routing/admin/do-login',
 			moduleControls: moduleControls,
 			registeredCalls : []),
 		]
 		pageTypes*.value*.save();
-
 		def pages = [
 			homepage : new Page(
 			host: defaultHost,
@@ -122,10 +142,20 @@ Brief summary/description of the plugin.
 			requestType: RequestTypeEnum.REGULAR,
 			httpMethod: HttpMethodEnum.GET,
 			pageType: pageTypes.adminHomepagePageType
-			),
+			),			
 		]
+		pages['adminLogin'] = new Page(
+			parent: pages.adminHomepage,
+			urlPart: '/login',
+			pageType: pageTypes.loginPageType
+			);
+		pages['adminDoLogin'] = new Page(
+			parent: pages.adminHomepage,
+			urlPart: '/do-login',
+			pageType: pageTypes.doLoginPageType
+			);
 		pages*.value*.save();
-		return [pages: pages, moduleControls: [routingMc:routingMc]]
+		return [pages: pages, pageTypes: pageTypes, moduleControls: [routingMc:routingMc]]
 	}
 	
 }

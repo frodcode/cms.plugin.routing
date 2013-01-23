@@ -14,6 +14,9 @@ class FrontController {
 
 	def route() {
 		def page = routingService.findPageByRequest(this.request);
+		if (!isLoggedIn()) {
+			throw new IllegalAccessError('Not permited')
+		}
 		def callViewModels = []
 		callViewModels += callExecutor.executeCalls(applicationContext, page, request, params);
 		if (callViewModels) {
