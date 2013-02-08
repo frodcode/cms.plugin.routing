@@ -1,22 +1,26 @@
 package routing
 
+import module.CallExecutor
 import module.CallViewModel
 
 import org.springframework.web.servlet.ModelAndView
 
 class FrontController {
 
-	def routingService;
+	RoutingService routingService;
 
-	def callExecutor;
+	CallExecutor callExecutor;
 
 	static layout = 'main'
 
 	def route() {
 		def page = routingService.findPageByRequest(this.request);
-		if (!isLoggedIn()) {
-			throw new IllegalAccessError('Not permited')
+		if (!page) {
+			throw new IllegalArgumentException('Cannot find page')
 		}
+		/*if (!isLoggedIn()) {
+		 throw new IllegalAccessError('Not permited')
+		 }*/
 		def callViewModels = []
 		callViewModels += callExecutor.executeCalls(applicationContext, page, request, params);
 		if (callViewModels) {
@@ -37,6 +41,7 @@ class FrontController {
 		}
 
 		viewModel['page'] = page
+
 		return new ModelAndView(page.pageType.templateName, viewModel)
 	}
 

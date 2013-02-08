@@ -46,13 +46,18 @@ Brief summary/description of the plugin.
     }
 
     def doWithSpring = {
+		authService(routing.AuthService) {
+			authenticationManager = ref('authenticationManager')
+		}
         routingService(routing.RoutingService)	
 		callExecutor(module.CallExecutor) 
 		'routing.control.RoutingModuleControl'(routing.control.RoutingModuleControl) {
 			routingService = ref('routingService');
 		}
+
 		'routing.auth.AuthModuleControl'(routing.auth.AuthModuleControl) {
-			
+			authService = ref('authService');
+			routingService = ref('routingService');
 		}
 		'example.NewsModuleControl'(example.NewsModuleControl)
 		'example.ArticleModuleControl'(example.ArticleModuleControl)
@@ -82,12 +87,16 @@ Brief summary/description of the plugin.
     }
 	
 	public static def loadFixtures(def ctx, defaultHost) {
-		def atuhModuleControl = ctx.authModuleControl
+		def atuhModuleControl = ctx.'routing.auth.AuthModuleControl'
 		def moduleControls = [
 			ModuleControl routingMc = new ModuleControl(
 			className: routing.control.RoutingModuleControl.class.getName(),
 			slug: 'routing'
 			),
+			ModuleControl authMc = new ModuleControl(
+				className: routing.auth.AuthModuleControl.class.getName(),
+				slug: 'auth'
+				),
 		]
 		moduleControls*.save();
 
@@ -122,7 +131,11 @@ Brief summary/description of the plugin.
 			singleton: true,
 			templateName: '/routing/admin/do-login',
 			moduleControls: moduleControls,
-			registeredCalls : []),
+			registeredCalls : new RegisteredCall(
+						moduleControl: authMc,
+						methodName: 'doLogin'
+						),
+			),
 		]
 		pageTypes*.value*.save();
 		def pages = [
@@ -152,6 +165,7 @@ Brief summary/description of the plugin.
 		pages['adminDoLogin'] = new Page(
 			parent: pages.adminHomepage,
 			urlPart: '/do-login',
+			httpMethod: HttpMethodEnum.POST,
 			pageType: pageTypes.doLoginPageType
 			);
 		pages*.value*.save();

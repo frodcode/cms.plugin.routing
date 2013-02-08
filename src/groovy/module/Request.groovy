@@ -1,19 +1,13 @@
 package module
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-
-import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest;
 
 class Request implements Map {
-	
+
 	def full;
-	
+
 	def params;
-	
-	public def getHeader(String headerName)
-	{
+
+	public def getHeader(String headerName) {
 		return full.getHeader(headerName)
 	}
 
@@ -76,5 +70,4 @@ class Request implements Map {
 	public Set entrySet() {
 		return params.entrySet();
 	}
-
 }
