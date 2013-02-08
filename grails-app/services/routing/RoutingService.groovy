@@ -36,22 +36,16 @@ class RoutingService {
 
 	public Page findPageByRequest(HttpServletRequest requestObject) {
 
-		def pages = Page.executeQuery("SELECT p FROM Page as p INNER JOIN FETCH p.pageType pt LEFT JOIN FETCH pt.moduleControls mc WHERE p.url = :url AND p.httpMethod = :httpMethod AND p.requestType = :requestType",
+		def page = Page.find("FROM Page as p INNER JOIN FETCH p.pageType pt LEFT JOIN FETCH pt.moduleControls mc WHERE p.url = :url AND p.httpMethod = :httpMethod AND p.requestType = :requestType",
 				[url: getCompleteUrl(requestObject), httpMethod: getHttpMethodByRequest(requestObject), requestType: getRequestTypeByRequest(requestObject)])
-		if (!pages) {
-			return null
-		}
-		Page page = pages[0]
 		return page
 	}
 
 	public Page getSingleton(String type) {
-
-		def pages = Page.executeQuery("SELECT p FROM Page as p INNER JOIN FETCH p.pageType pt LEFT JOIN FETCH pt.moduleControls mc WHERE p.pageType.slug = :type AND p.pageType.singleton = :singleton", [type: type, singleton: true])
-		if (!pages) {
+		Page page = Page.find("FROM Page as p INNER JOIN FETCH p.pageType pt LEFT JOIN FETCH pt.moduleControls mc WHERE p.pageType.slug = :type AND p.pageType.singleton = :singleton", [type: type, singleton: true])
+		if (!page) {
 			throw new IllegalArgumentException(sprintf('Cannot find singleton page with type "%s"', type))
 		}
-		Page page = pages[0]
 		return page
 	}
 

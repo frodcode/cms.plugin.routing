@@ -1,5 +1,6 @@
 import org.codehaus.groovy.grails.commons.ApplicationAttributes
 
+import routing.data.Fixtures
 import routing.domain.auth.AuthRole
 import routing.domain.auth.AuthUser
 import routing.domain.auth.AuthUserAuthRole
@@ -18,7 +19,7 @@ class BootStrap {
 
 		AuthUserAuthRole.create testUser, adminRole, true
 
-		def fixtures = RoutingGrailsPlugin.loadFixtures(ctx, defaultHost)
+		def fixtures = Fixtures.load(ctx, defaultHost)
 		fixtures.pages.adminHomepage.addToAuthRoles(adminRole)
 		fixtures.pages.adminHomepage.save()
 	}
