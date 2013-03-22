@@ -24,6 +24,7 @@ class AuthModuleControl {
 	def onDenied = { moduleResponse, moduleRequest, page ->
 		Page redirectPage = routingService.getSingleton(loginSlug);
 		moduleResponse.addFlash('error', 'Wrong username or password')
+        println 'incorrect login'
 		moduleResponse.addRedirect(redirectPage)
 	}
 

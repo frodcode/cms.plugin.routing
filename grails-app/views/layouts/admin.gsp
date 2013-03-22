@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <g:layoutTitle/>
     <r:layoutResources/>
+    <title><g:layoutTitle default="CMS"/></title>
 </head>
 
 <body>
-<g:layoutBody/>
-<r:layoutResources/>
+    <g:layoutBody/>
+    <r:layoutResources/>
 </body>
 </html>

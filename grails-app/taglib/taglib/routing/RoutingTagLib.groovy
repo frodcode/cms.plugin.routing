@@ -29,7 +29,7 @@ class RoutingTagLib {
 		def nameString = getElementName(moduleControls, name);
         def myAttrs = [name: nameString, id: name, value: attrs.value]
 
-		out << g.textField(myAttrs + attrs)
+		out << g.textField(attrs+myAttrs)
 	}
 
 	/**

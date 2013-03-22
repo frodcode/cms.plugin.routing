@@ -20,7 +20,7 @@ class FrontController {
 	def route() {
 		Page page = routingService.findPageByRequest(this.request);
 		if (!page) {
-			throw new IllegalArgumentException('Cannot find page')
+			throw new IllegalArgumentException('Cannot find page by params '+this.request.getParameterMap() + ' and method '+this.request.getMethod()+' on url '+this.request.forwardURI)
 		}
 		if (page.authRoles) {
 			if (!isLoggedIn()) {

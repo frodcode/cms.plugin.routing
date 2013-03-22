@@ -11,7 +11,12 @@ import routing.domain.RequestTypeEnum
 class RoutingService {
 
 	private String getCompleteUrl(HttpServletRequest requestObject) {
-		return (requestObject.scheme + "://" + requestObject.serverName + ":" + requestObject.serverPort + requestObject.forwardURI)
+		def url = (requestObject.scheme + "://" + requestObject.serverName + ":" + requestObject.serverPort + requestObject.forwardURI).trim()
+        if (url.charAt(url.length()-1) == '/') {
+            url = url[0..-2]
+        }
+        println url+'added-compile';
+        return url;
 	}
 
 	private RequestTypeEnum getRequestTypeByRequest(HttpServletRequest requestObject) {

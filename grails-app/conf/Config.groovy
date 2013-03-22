@@ -45,6 +45,7 @@ grails.resources.modules = {
         dependsOn 'admincore'
         resource url:'/admin/css/fullcalendar.css'
         resource url:'/admin/css/unicorn.grey.css'
+        resource url:'/admin/css/unicorn.main.css'
         resource url:'/admin/js/excanvas.min.js'
         resource url:'/admin/js/jquery.ui.custom.js'
         resource url:'/admin/js/bootstrap.min.js'

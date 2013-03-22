@@ -2,13 +2,14 @@
 <head>
     <meta name="layout" content="admin"/>
     <r:require modules="adminlogin"/>
+    <title>Přihlášení do administrace</title>
 </head>
 <body>
 <div id="logo">
     <r:img uri="/admin/img/logo.png" alt="" />
 </div>
 <div id="loginbox">
-    <r:form singleton='${auth.mc.doLoginSlug}' id="loginform" class="form-vertical">
+    <r:form singleton='${auth.mc.doLoginSlug}' id="loginform" class="form-vertical" method="post">
         <p>Uveďte prosím přihlašovací jméno a heslo</p>
         <div class="control-group">
             <div class="controls">
