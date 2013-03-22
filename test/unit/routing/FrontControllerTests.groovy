@@ -1,8 +1,7 @@
 package routing
 
-
-
 import grails.test.mixin.*
+
 import org.junit.*
 
 /**
@@ -11,7 +10,7 @@ import org.junit.*
 @TestFor(FrontController)
 class FrontControllerTests {
 
-    void testSomething() {
-       fail "Implement me"
-    }
+	void testSomething() {
+		fail "Implement me"
+	}
 }

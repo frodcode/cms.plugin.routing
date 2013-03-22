@@ -1,7 +1,8 @@
 package routing.control
 
-import domain.routing.Page
-import domain.routing.PageType
+import routing.domain.Page
+import routing.domain.PageType
+
 
 class RoutingModuleControl {
 

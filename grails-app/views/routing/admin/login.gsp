@@ -1,30 +1,49 @@
-<div id='login'>
-	<div class='inner'>
-		<div class='fheader'><g:message code="springSecurity.login.header"/></div>
-
-		<g:if test='${flash.message}'>
-			<div class='login_message'>${flash.message}</div>
-		</g:if>
-	
-		<r:form page='${routing.mc.getSingleton(auth.mc.doLoginSlug)}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
-			<p>
-				<label for='username'><g:message code="springSecurity.login.username.label"/>:</label>
-				<r:textField name='username' controls="auth"/>
-			</p>
-
-			<p>
-				<label for='password'><g:message code="springSecurity.login.password.label"/>:</label>
-				<r:textField name='password' controls="auth"/>
-			</p>
-
-			<p id="remember_me_holder">
-				<input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/>
-				<label for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
-			</p>
-
-			<p>
-				<input type='submit' id="submit" value='${message(code: "springSecurity.login.button")}'/>
-			</p>
-		</r:form>
-	</div>
+<html>
+<head>
+    <meta name="layout" content="admin"/>
+    <r:require modules="adminlogin"/>
+</head>
+<body>
+<div id="logo">
+    <r:img uri="/admin/img/logo.png" alt="" />
 </div>
+<div id="loginbox">
+    <r:form singleton='${auth.mc.doLoginSlug}' id="loginform" class="form-vertical">
+        <p>Uveďte prosím přihlašovací jméno a heslo</p>
+        <div class="control-group">
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-user"></i></span><r:textField name='username' controls="auth" placeholder="Uživatelské jméno"/>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-lock"></i></span><r:textField name='password' controls="auth" placeholder="Heslo"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <span class="pull-left"><a href="login.html#" class="flip-link" id="to-recover">Lost password?</a></span>
+            <span class="pull-right"><input type="submit" class="btn btn-inverse" value="Login" /></span>
+        </div>
+        </form>
+    <form id="recoverform" action="login.html#" class="form-vertical">
+        <p>Enter your e-mail address below and we will send you instructions how to recover a password.</p>
+        <div class="control-group">
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-envelope"></i></span><input type="text" placeholder="E-mail address" />
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <span class="pull-left"><a href="login.html#" class="flip-link" id="to-login">&lt; Back to login</a></span>
+            <span class="pull-right"><input type="submit" class="btn btn-inverse" value="Recover" /></span>
+        </div>
+    </r:form>
+</div>
+</body>
+</html>
+

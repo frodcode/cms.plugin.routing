@@ -1,5 +1,5 @@
 class UrlMappings {
-
+    static excludes = ['/admin/css/**', '/admin/img/**', '/admin/js/**']
 	static mappings = {
 		"/**"{
 			controller = "Front"

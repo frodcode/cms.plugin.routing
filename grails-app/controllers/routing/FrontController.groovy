@@ -1,9 +1,11 @@
 package routing
 
-import module.CallExecutor
-import module.CallViewModel
-
 import org.springframework.web.servlet.ModelAndView
+
+import routing.call.CallExecutor
+import routing.call.CallViewModel
+import routing.control.auth.AuthModuleControl
+import routing.domain.Page
 
 class FrontController {
 
@@ -11,12 +13,20 @@ class FrontController {
 
 	CallExecutor callExecutor;
 
-	static layout = 'main'
+	AuthModuleControl authModuleControl
+
+	static layout = 'admin'
 
 	def route() {
-		def page = routingService.findPageByRequest(this.request);
+		Page page = routingService.findPageByRequest(this.request);
 		if (!page) {
 			throw new IllegalArgumentException('Cannot find page')
+		}
+		if (page.authRoles) {
+			if (!isLoggedIn()) {
+				Page redirectPage = this.routingService.getSingleton(this.authModuleControl.loginSlug);
+				redirect(uri: redirectPage.url)
+			}
 		}
 		/*if (!isLoggedIn()) {
 		 throw new IllegalAccessError('Not permited')

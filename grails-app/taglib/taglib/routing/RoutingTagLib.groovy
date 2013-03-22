@@ -1,16 +1,23 @@
 package taglib.routing
 
 class RoutingTagLib {
+    def routingService
 	static namespace = "r"
 
 	def form = {attrs, body ->
 		def page = attrs.page
 		def action = attrs.action
-		if (!page && action) {
+        def singletonSlug = attrs.singleton;
+		if ((!page && action) || (page && singletonSlug)) {
 			throw new IllegalArgumentException('You must define a page to call form action or action itself');
 		}
+        if (singletonSlug) {
+            action = routingService.getSingleton(singletonSlug)?.getLinkFrom(pageScope.page)
+
+        }
+        println(action)
 		if (page) {
-			action = page.getLinkTo(pageScope.page)
+			action = page.getLinkFrom(pageScope.page)
 		}
 		def attrString = getAllAttrsAsString(attrs)
 		out << "<form action='${action}'${attrString}>"+body()+'</form>'
@@ -20,7 +27,9 @@ class RoutingTagLib {
 		def moduleControls = attrs.controls
 		def name = attrs.name
 		def nameString = getElementName(moduleControls, name);
-		out << g.textField(name: nameString, id: name, value: attrs.value)
+        def myAttrs = [name: nameString, id: name, value: attrs.value]
+
+		out << g.textField(myAttrs + attrs)
 	}
 
 	/**
@@ -38,7 +47,7 @@ class RoutingTagLib {
 		if (!page) {
 			url = 'Error: you must provide page to the link'
 		} else {
-			url = page?.getLinkTo(currentPage)
+			url = page?.getLinkFrom(currentPage)
 			params.each { it->
 				if (it.value instanceof Map == false) {
 					throw new IllegalArgumentException(sprintf('Params for link of control "%s" must be instance of Map. E.g. [controlName:[id:4]]', it.key))

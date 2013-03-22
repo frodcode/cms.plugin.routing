@@ -1,4 +1,4 @@
-import domain.routing.Page
+import routing.domain.Page
 
 // configuration for plugin testing - will not be included in the plugin zip
 
@@ -27,13 +27,40 @@ log4j = {
 	warn   'org.mortbay.log'
 }
 
-environments {
-	testPlugin {
-		//-Dgrails.env=testPlugin
-		def page = new Page();
-		setting = "bar"
-	}
+grails.resources.modules = {
+    admincore {
+        resource url:'/admin/css/bootstrap.min.css'
+        resource url:'/admin/css/bootstrap-responsive.min.css'
+        resource url:'/admin/js/jquery.min.js'
+    }
+
+    adminlogin {
+        dependsOn 'admincore'
+        resource url:'/admin/css/unicorn.login.css'
+        resource url:'/admin/css/bootstrap.min.css'
+        resource url:'/admin/css/bootstrap-responsive.min.css'
+        resource url:'/admin/js/unicorn.login.js'
+    }
+    admintypical {
+        dependsOn 'admincore'
+        resource url:'/admin/css/fullcalendar.css'
+        resource url:'/admin/css/unicorn.grey.css'
+        resource url:'/admin/js/excanvas.min.js'
+        resource url:'/admin/js/jquery.ui.custom.js'
+        resource url:'/admin/js/bootstrap.min.js'
+        resource url:'/admin/js/jquery.flot.min.js'
+        resource url:'/admin/js/jquery.flot.resize.min.js'
+        resource url:'/admin/js/jquery.peity.min.js'
+        resource url:'/admin/js/fullcalendar.min.js'
+        resource url:'/admin/js/unicorn.js'
+        resource url:'/admin/js/unicorn.dashboard.js'
+    }
 }
+
+//grails.resources.mappers.bundle.enabled = false
+//grails.resources.uri.prefix = 'staticresource'
+//grails.resources.debug=true
+
 grails.views.default.codec="none" // none, html, base64
 grails.views.gsp.encoding="UTF-8"
 

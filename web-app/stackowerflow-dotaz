@@ -1,0 +1,27 @@
+What I really need is keep all css and js files as they are (disable bundling)
+
+I've got this URL mappings class:
+
+
+  class UrlMappings {
+
+	static mappings = {
+        "/admin/$action"{
+            controller = "Admin"
+        }
+		"500"(view:'/error')
+	    }
+    }
+
+When I have start my application with default settings (bundling on), everything seems to be ok. Link to my source looks like this:
+
+    /static/bundle-bundle_adminlogin_head.css //see the static prefix
+
+When I launch the page in debug mode by adding ?_debugResources=y to params (equivalent to grails.resources.debug=true in config), than links are:
+
+    /admin/css/bootstrap-responsive.min.css?_debugResources=y&n=1362763478516
+    /admin/css/bootstrap.min.css?_debugResources=y&n=1362764910238
+
+Where the **static** prefix disappeared? I need it because this URL can lead to my Controller instead of the css file (even though in this case it is not true, but anyway). Can I set some config value to change it?
+
+I wonder if there is any way how to keep all static resources in subdomain and

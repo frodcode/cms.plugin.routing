@@ -2,14 +2,13 @@ package routing
 
 import javax.servlet.http.HttpServletRequest
 
-import domain.routing.HttpMethodEnum
-import domain.routing.Page
-import domain.routing.PageType
-import domain.routing.RequestTypeEnum
+import routing.domain.HttpMethodEnum
+import routing.domain.Page
+import routing.domain.PageType
+import routing.domain.RequestTypeEnum
 
 
 class RoutingService {
-
 
 	private String getCompleteUrl(HttpServletRequest requestObject) {
 		return (requestObject.scheme + "://" + requestObject.serverName + ":" + requestObject.serverPort + requestObject.forwardURI)

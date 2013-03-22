@@ -50,12 +50,12 @@ Brief summary/description of the plugin.
 			authenticationManager = ref('authenticationManager')
 		}
         routingService(routing.RoutingService)	
-		callExecutor(module.CallExecutor) 
+		callExecutor(routing.call.CallExecutor) 
 		'routing.control.RoutingModuleControl'(routing.control.RoutingModuleControl) {
 			routingService = ref('routingService');
 		}
-
-		'routing.auth.AuthModuleControl'(routing.auth.AuthModuleControl) {
+		authModuleControl(routing.control.auth.AuthModuleControl)
+		'routing.control.auth.AuthModuleControl'(routing.control.auth.AuthModuleControl) {
 			authService = ref('authService');
 			routingService = ref('routingService');
 		}
