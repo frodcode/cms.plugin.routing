@@ -10,11 +10,16 @@ import routing.domain.UrlTypeEnum
 import routing.domain.auth.AuthRole
 import routing.domain.auth.AuthUser
 import routing.domain.auth.AuthUserAuthRole
-
+import routing.auth.AclService
 
 class Fixtures {
 	public static def load(def ctx, def defaultHost) {
-		def atuhModuleControl = ctx.'routing.control.auth.AuthModuleControl'
+		def authModuleControl = ctx.'routing.control.auth.AuthModuleControl'
+        AclService aclService = ctx.aclService
+
+        aclService.adminHomepageSlug = authModuleControl.adminHomepageSlug
+        aclService.notEnoughPrivilegesSlug = authModuleControl.loginSlug
+        aclService.notLoggedInSlug = authModuleControl.loginSlug
 
 		def adminRole = new AuthRole(authority: 'ROLE_ADMIN').save(flush: true)
 		def userRole = new AuthRole(authority: 'ROLE_USER').save(flush: true)
@@ -24,16 +29,17 @@ class Fixtures {
 		AuthUserAuthRole.create testUser, adminRole, true
 
 		def moduleControls = [
-			ModuleControl routingMc = new ModuleControl(
+			routingMc : new ModuleControl(
 			className: routing.control.RoutingModuleControl.class.getName(),
 			slug: 'routing'
 			),
-			ModuleControl authMc = new ModuleControl(
+			authMc : new ModuleControl(
 			className: routing.control.auth.AuthModuleControl.class.getName(),
 			slug: 'auth'
 			),
 		]
-		moduleControls*.save();
+		moduleControls*.value*.save();
+
 
 		def pageTypes = [
 			homepagePageType : new PageType(
@@ -41,34 +47,34 @@ class Fixtures {
 			description: 'Homepage',
 			singleton: true,
 			templateName: '/routing/front/homepage',
-			moduleControls: moduleControls,
+			moduleControls: moduleControls*.value,
 			registeredCalls : []),
 
 			adminHomepagePageType : new PageType(
-			slug : 'admin_homepage',
+			slug : authModuleControl.adminHomepageSlug,
 			description: 'Admin article page',
 			singleton: true,
 			templateName: '/routing/admin/homepage',
-			moduleControls: moduleControls,
+			moduleControls: moduleControls*.value,
 			registeredCalls : [],
 			),
 
 			loginPageType : new PageType(
-			slug : atuhModuleControl.loginSlug,
+			slug : authModuleControl.loginSlug,
 			description: 'Admin login page',
 			singleton: true,
 			templateName: '/routing/admin/login',
-			moduleControls: moduleControls,
+			moduleControls: moduleControls*.value,
 			registeredCalls : []),
 
 			doLoginPageType : new PageType(
-			slug : atuhModuleControl.doLoginSlug,
+			slug : authModuleControl.doLoginSlug,
 			description: 'Admin confirm login',
 			singleton: true,
 			templateName: '/routing/admin/do-login',
-			moduleControls: moduleControls,
+			moduleControls: moduleControls*.value,
 			registeredCalls : new RegisteredCall(
-			moduleControl: authMc,
+			moduleControl: moduleControls['authMc'],
 			methodName: 'doLogin'
 			),
 			),
@@ -106,6 +112,6 @@ class Fixtures {
 				pageType: pageTypes.doLoginPageType,
 				authRoles: []);
 		pages*.value*.save();
-		return [pages: pages, pageTypes: pageTypes, moduleControls: [routingMc:routingMc]]
+		return [pages: pages, pageTypes: pageTypes, moduleControls: moduleControls]
 	}
 }

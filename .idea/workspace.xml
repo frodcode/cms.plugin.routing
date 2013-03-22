@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09b90fef-961d-43d7-b847-f45d10c7cf6c" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/grails-app/controllers/routing/AdminController.groovy" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/unit/routing/AdminControllerTests.groovy" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/groovy/routing/auth/AclRedirectAction.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/Config.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RoutingGrailsPlugin.groovy" afterPath="$PROJECT_DIR$/RoutingGrailsPlugin.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/controllers/routing/FrontController.groovy" afterPath="$PROJECT_DIR$/grails-app/controllers/routing/FrontController.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/routing/RoutingService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/routing/RoutingService.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/taglib/taglib/routing/RoutingTagLib.groovy" afterPath="$PROJECT_DIR$/grails-app/taglib/taglib/routing/RoutingTagLib.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/layouts/admin.gsp" afterPath="$PROJECT_DIR$/grails-app/views/layouts/admin.gsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/routing/admin/homepage.gsp" afterPath="$PROJECT_DIR$/grails-app/views/routing/admin/homepage.gsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/routing/admin/login.gsp" afterPath="$PROJECT_DIR$/grails-app/views/routing/admin/login.gsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/groovy/routing/control/auth/AuthModuleControl.groovy" afterPath="$PROJECT_DIR$/src/groovy/routing/control/auth/AuthModuleControl.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/routing/domain/PageType.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/routing/domain/PageType.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/groovy/routing/data/Fixtures.groovy" afterPath="$PROJECT_DIR$/src/groovy/routing/data/Fixtures.groovy" />
     </list>
     <ignored path="Routing.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -91,54 +86,88 @@
       <file leaf-file-name="AuthModuleControl.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/groovy/routing/control/auth/AuthModuleControl.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="49" selection-start="1176" selection-end="1176" vertical-scroll-proportion="0.0">
+            <state line="13" column="57" selection-start="337" selection-end="337" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="homepage.gsp" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="homepage.gsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/views/routing/admin/homepage.gsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="265" column="7" selection-start="15690" selection-end="15690" vertical-scroll-proportion="0.91847825">
+            <state line="265" column="7" selection-start="15690" selection-end="15690" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Config.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
+      <file leaf-file-name="AclService.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/services/routing/auth/AclService.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="45" selection-start="1606" selection-end="1606" vertical-scroll-proportion="0.0">
+            <state line="15" column="35" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stackowerflow-dotaz" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web-app/stackowerflow-dotaz">
+      <file leaf-file-name="Fixtures.groovy" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/groovy/routing/data/Fixtures.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="47" selection-start="517" selection-end="536" vertical-scroll-proportion="0.0">
+            <state line="21" column="64" selection-start="810" selection-end="810" vertical-scroll-proportion="0.32846716">
+              <folding>
+                <element signature="e#22#58#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RoutingGrailsPlugin.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RoutingGrailsPlugin.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="52" column="13" selection-start="1735" selection-end="1735" vertical-scroll-proportion="-18.8">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.gsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/views/routing/admin/login.gsp">
+      <file leaf-file-name="FrontController.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/controllers/routing/FrontController.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="147" vertical-scroll-proportion="-0.0">
+            <state line="64" column="21" selection-start="1777" selection-end="1777" vertical-scroll-proportion="-20.0">
+              <folding>
+                <element signature="e#17#68#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IAclAction.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/groovy/routing/auth/IAclAction.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="22" selection-start="86" selection-end="86" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin.gsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/admin.gsp">
+      <file leaf-file-name="AclRedirectAction.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/groovy/routing/auth/AclRedirectAction.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="66" selection-end="66" vertical-scroll-proportion="-1.25">
+            <state line="6" column="45" selection-start="99" selection-end="109" vertical-scroll-proportion="0.0">
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PageType.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/domain/routing/domain/PageType.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="49" selection-start="394" selection-end="394" vertical-scroll-proportion="-7.159091">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+            <state />
           </provider>
         </entry>
       </file>
@@ -155,22 +184,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$USER_HOME$/.grails/2.2.0/projects/Routing/plugins/resources-1.1.6/src/groovy/org/grails/plugin/resource/URLUtils.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/views/admin/login.gsp" />
-        <option value="$PROJECT_DIR$/grails-app/controllers/routing/AdminController.groovy" />
-        <option value="$PROJECT_DIR$/web-app/stackowerflow-dotaz" />
         <option value="$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy" />
-        <option value="$PROJECT_DIR$/src/groovy/routing/data/Fixtures.groovy" />
-        <option value="$PROJECT_DIR$/RoutingGrailsPlugin.groovy" />
         <option value="$PROJECT_DIR$/grails-app/domain/routing/domain/Page.groovy" />
         <option value="$PROJECT_DIR$/grails-app/views/layouts/admin.gsp" />
         <option value="$PROJECT_DIR$/grails-app/views/routing/admin/login.gsp" />
         <option value="$PROJECT_DIR$/src/groovy/routing/control/auth/AuthModuleControl.groovy" />
         <option value="$PROJECT_DIR$/grails-app/taglib/taglib/routing/RoutingTagLib.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/controllers/routing/FrontController.groovy" />
         <option value="$PROJECT_DIR$/grails-app/services/routing/RoutingService.groovy" />
         <option value="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
         <option value="$PROJECT_DIR$/grails-app/views/routing/admin/homepage.gsp" />
+        <option value="$PROJECT_DIR$/grails-app/domain/routing/domain/PageType.groovy" />
+        <option value="$PROJECT_DIR$/src/groovy/routing/auth/IAclAction.groovy" />
+        <option value="$PROJECT_DIR$/src/groovy/routing/auth/AclRedirectAction.groovy" />
+        <option value="$PROJECT_DIR$/RoutingGrailsPlugin.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/controllers/routing/FrontController.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/services/routing/auth/AclService.groovy" />
+        <option value="$PROJECT_DIR$/src/groovy/routing/data/Fixtures.groovy" />
       </list>
     </option>
   </component>
@@ -214,16 +243,6 @@
             <PATH_ELEMENT USER_OBJECT="Root">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Routing" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -276,6 +295,16 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Routing" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -289,9 +318,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -504,27 +533,27 @@
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902583" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25745526" sideWeight="0.50232315" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Grails View" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21011874" sideWeight="0.67097414" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Grails View" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21011874" sideWeight="0.67097414" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902583" sideWeight="0.49612802" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24935468" sideWeight="0.67097414" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24935468" sideWeight="0.67097414" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25745526" sideWeight="0.494063" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902583" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902583" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902583" sideWeight="0.49612802" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -621,34 +650,63 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/grails-app/controllers/LoginController.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/services/routing/RoutingService.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="34" selection-start="548" selection-end="548" vertical-scroll-proportion="0.26370218" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web-app/stackowerflow-dotaz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="47" selection-start="517" selection-end="536" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/routing/admin/login.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="147" vertical-scroll-proportion="-0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/admin.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="66" selection-end="66" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="28" selection-start="970" selection-end="970" vertical-scroll-proportion="0.4692388" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="42" selection-start="403" selection-end="403" vertical-scroll-proportion="0.10948905" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/routing/admin/homepage.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="265" column="7" selection-start="15690" selection-end="15690" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/RoutingGrailsPlugin.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="68" selection-start="2243" selection-end="2243" vertical-scroll-proportion="0.64285713" />
+        <state line="52" column="13" selection-start="1735" selection-end="1735" vertical-scroll-proportion="-18.8">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/login/auth.gsp">
+    <entry file="file://$PROJECT_DIR$/src/groovy/routing/auth/IAclAction.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="27" selection-start="1059" selection-end="1060" vertical-scroll-proportion="0.01607717" />
+        <state line="6" column="22" selection-start="86" selection-end="86" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="jar:///usr/share/grails/2.2.0/src/grails-web-2.2.0-sources.jar!/org/codehaus/groovy/grails/plugins/web/api/CommonWebApi.java">
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/routing/domain/PageType.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="78" selection-start="3258" selection-end="3260" vertical-scroll-proportion="0.31699687" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/groovy/routing/control/RoutingModuleControl.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="56" selection-start="273" selection-end="273" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/taglib/taglib/routing/RoutingTagLib.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="33" selection-start="968" selection-end="968" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/routing/domain/Page.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="26" selection-start="540" selection-end="540" vertical-scroll-proportion="0.0">
+        <state line="21" column="49" selection-start="394" selection-end="394" vertical-scroll-proportion="-7.159091">
           <folding />
         </state>
       </provider>
@@ -656,73 +714,40 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/controllers/LoginController.groovy">
+    <entry file="file://$PROJECT_DIR$/src/groovy/routing/auth/AclRedirectAction.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="6" column="45" selection-start="99" selection-end="109" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/services/routing/RoutingService.groovy">
+    <entry file="file://$PROJECT_DIR$/src/groovy/routing/control/auth/AuthModuleControl.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="34" selection-start="548" selection-end="548" vertical-scroll-proportion="0.26370218">
-          <folding>
-            <element signature="e#17#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/groovy/routing/data/Fixtures.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="28" selection-start="2701" selection-end="2701" vertical-scroll-proportion="0.0">
+        <state line="13" column="57" selection-start="337" selection-end="337" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/controllers/routing/FrontController.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="46" selection-start="417" selection-end="417" vertical-scroll-proportion="0.169279">
+        <state line="64" column="21" selection-start="1777" selection-end="1777" vertical-scroll-proportion="-20.0">
+          <folding>
+            <element signature="e#17#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/services/routing/auth/AclService.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="35" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/admin.gsp">
+    <entry file="file://$PROJECT_DIR$/src/groovy/routing/data/Fixtures.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="66" selection-end="66" vertical-scroll-proportion="-1.25">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web-app/stackowerflow-dotaz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="47" selection-start="517" selection-end="536" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/groovy/routing/control/auth/AuthModuleControl.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="49" selection-start="1176" selection-end="1176" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="45" selection-start="1606" selection-end="1606" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/routing/admin/login.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="147" vertical-scroll-proportion="-0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/routing/admin/homepage.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="265" column="7" selection-start="15690" selection-end="15690" vertical-scroll-proportion="0.91847825">
-          <folding />
+        <state line="21" column="64" selection-start="810" selection-end="810" vertical-scroll-proportion="0.32846716">
+          <folding>
+            <element signature="e#22#58#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

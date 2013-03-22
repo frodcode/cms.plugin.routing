@@ -6,6 +6,9 @@ import routing.call.CallExecutor
 import routing.call.CallViewModel
 import routing.control.auth.AuthModuleControl
 import routing.domain.Page
+import routing.auth.AclService
+import routing.auth.IAclAction
+import routing.auth.AclRedirectAction
 
 class FrontController {
 
@@ -14,6 +17,8 @@ class FrontController {
 	CallExecutor callExecutor;
 
 	AuthModuleControl authModuleControl
+
+    def aclService
 
 	static layout = 'admin'
 
@@ -24,8 +29,8 @@ class FrontController {
 		}
 		if (page.authRoles) {
 			if (!isLoggedIn()) {
-				Page redirectPage = this.routingService.getSingleton(this.authModuleControl.loginSlug);
-				redirect(uri: redirectPage.url)
+                IAclAction aclAction = aclService.getRedirectAddressOnNotLoggedIn(page)
+                applyAclAction(aclAction)
 			}
 		}
 		/*if (!isLoggedIn()) {
@@ -54,6 +59,11 @@ class FrontController {
 
 		return new ModelAndView(page.pageType.templateName, viewModel)
 	}
+
+    private void applyAclAction(AclRedirectAction aclAction)
+    {
+        redirect(uri:aclAction.url)
+    }
 
 	private LinkedHashMap getAllVarsForModuleControl(List<CallViewModel> callViewModels, String moduleControlSlug) {
 		def allVars = [:]
