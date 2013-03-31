@@ -18,6 +18,8 @@ class FrontController {
 
 	AuthModuleControl authModuleControl
 
+    def springSecurityService
+
     def aclService
 
 	static layout = 'admin'
@@ -27,15 +29,21 @@ class FrontController {
 		if (!page) {
 			throw new IllegalArgumentException('Cannot find page by params '+this.request.getParameterMap() + ' and method '+this.request.getMethod()+' on url '+this.request.forwardURI)
 		}
+        if (!routingService.getCompleteUrl(request).equals(page.url) && !page.isRoot()) {
+            redirect(uri: page.url);
+        }
 		if (page.authRoles) {
-			if (!isLoggedIn()) {
-                IAclAction aclAction = aclService.getRedirectAddressOnNotLoggedIn(page)
-                applyAclAction(aclAction)
-			}
+            IAclAction aclAction
+			if (!springSecurityService.isLoggedIn()) {
+                aclAction = aclService.getRedirectAddressOnNotLoggedIn(page)
+			}else if (!page.authRoles.any { pageRole -> return !!springSecurityService.getCurrentUser().getAuthorities().find {authRole -> authRole.id == pageRole.id}}) {
+                aclAction = aclService.getActionOnNotEnoughPrivileges(page)
+            }
+            if (aclAction) {
+                applyAclAction(aclAction);
+            }
 		}
-		/*if (!isLoggedIn()) {
-		 throw new IllegalAccessError('Not permited')
-		 }*/
+
 		def callViewModels = []
 		callViewModels += callExecutor.executeCalls(applicationContext, page, request, params);
 		if (callViewModels) {

@@ -10,12 +10,8 @@ import routing.domain.RequestTypeEnum
 
 class RoutingService {
 
-	private String getCompleteUrl(HttpServletRequest requestObject) {
+	public String getCompleteUrl(HttpServletRequest requestObject) {
 		def url = (requestObject.scheme + "://" + requestObject.serverName + ":" + requestObject.serverPort + requestObject.forwardURI).trim()
-        if (url.charAt(url.length()-1) == '/') {
-            url = url[0..-2]
-        }
-        println url+'added-compile';
         return url;
 	}
 
@@ -39,9 +35,12 @@ class RoutingService {
 	}
 
 	public Page findPageByRequest(HttpServletRequest requestObject) {
-
+        def url = getCompleteUrl(requestObject)
+        if (url.charAt(url.length()-1) == '/') {
+            url = url[0..-2]
+        }
 		def page = Page.find("FROM Page as p INNER JOIN FETCH p.pageType pt LEFT JOIN FETCH pt.moduleControls mc WHERE p.url = :url AND p.httpMethod = :httpMethod AND p.requestType = :requestType",
-				[url: getCompleteUrl(requestObject), httpMethod: getHttpMethodByRequest(requestObject), requestType: getRequestTypeByRequest(requestObject)])
+				[url: url, httpMethod: getHttpMethodByRequest(requestObject), requestType: getRequestTypeByRequest(requestObject)])
 		return page
 	}
 

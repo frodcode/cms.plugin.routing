@@ -24,7 +24,7 @@
             </ul>
         </li>
         <li class="btn btn-inverse"><a title="" href="index.html#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
-        <li class="btn btn-inverse"><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+        <li class="btn btn-inverse"><r:link title="" singleton="${auth.mc.logoutSlug}"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></r:link></li>
     </ul>
 </div>
 

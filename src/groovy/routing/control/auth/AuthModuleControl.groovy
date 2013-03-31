@@ -11,6 +11,8 @@ class AuthModuleControl {
 	def doLoginSlug = 'auth_admin_do_login'
 	def loginSlug = 'auth_admin_login'
 	def adminHomepageSlug = 'admin_homepage'
+    def notEnoughPrivilegesSlug = 'auth_notenoughprivileges'
+    def logoutSlug = 'auth_logout'
 
 	RoutingService routingService;
 	AuthService authService
@@ -24,9 +26,14 @@ class AuthModuleControl {
 	def onDenied = { moduleResponse, moduleRequest, page ->
 		Page redirectPage = routingService.getSingleton(loginSlug);
 		moduleResponse.addFlash('error', 'Wrong username or password')
-        println 'incorrect login'
 		moduleResponse.addRedirect(redirectPage)
 	}
+
+    def onLogout = { moduleResponse, moduleRequest, page ->
+        Page redirectPage = routingService.getSingleton(loginSlug);
+        moduleResponse.addFlash('message', 'Logout sucessfuly')
+        moduleResponse.addRedirect(redirectPage)
+    }
 
 	public def doLogin(def page, def moduleRequest, def moduleResponse) {
 		try {
@@ -40,4 +47,10 @@ class AuthModuleControl {
 		}
 		return [:]
 	}
+
+    public def doLogout(def page, def moduleRequest, def moduleResponse) {
+        authService.logout()
+        moduleResponse.addCall(this.onLogout)
+        return [:]
+    }
 }

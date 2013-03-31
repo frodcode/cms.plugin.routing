@@ -20,4 +20,8 @@ class AuthService {
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
 	}
+
+    def logout() {
+        SecurityContextHolder.clearContext();
+    }
 }

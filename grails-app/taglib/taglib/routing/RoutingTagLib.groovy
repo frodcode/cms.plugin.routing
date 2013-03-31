@@ -15,7 +15,6 @@ class RoutingTagLib {
             action = routingService.getSingleton(singletonSlug)?.getLinkFrom(pageScope.page)
 
         }
-        println(action)
 		if (page) {
 			action = page.getLinkFrom(pageScope.page)
 		}
@@ -33,20 +32,24 @@ class RoutingTagLib {
 	}
 
 	/**
-	 * @attr page REQUIRED
+	 * @attr page|singleton
 	 * @attr params
 	 */
 	def link = {attrs, body ->
 		def page = attrs.page
 		def params = attrs.params
 		def currentPage = pageScope.page;
+        def singletonSlug = attrs.singleton;
 		if (params && !params instanceof Map) {
 			throw new IllegalArgumentException('Params for link must be instance of Map where first level key is control name and second is map of parameters')
 		}
 		def url = ''
-		if (!page) {
+		if (!page && !singletonSlug) {
 			url = 'Error: you must provide page to the link'
 		} else {
+            if (singletonSlug) {
+                page = routingService.getSingleton(singletonSlug)
+            }
 			url = page?.getLinkFrom(currentPage)
 			params.each { it->
 				if (it.value instanceof Map == false) {
@@ -70,7 +73,6 @@ class RoutingTagLib {
 		hashMap.each { it ->
 			linkParams += control+'_'+it.key + '=' + it.value + '&amp;'
 		}
-		println linkParams + '-----------'
 		linkParams = linkParams[0..-6]
 		return currentUrl + linkParams
 	}

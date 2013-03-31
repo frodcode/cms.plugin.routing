@@ -20,98 +20,155 @@ class Fixtures {
         aclService.adminHomepageSlug = authModuleControl.adminHomepageSlug
         aclService.notEnoughPrivilegesSlug = authModuleControl.loginSlug
         aclService.notLoggedInSlug = authModuleControl.loginSlug
+        aclService.notEnoughPrivilegesSlug = authModuleControl.notEnoughPrivilegesSlug
 
 		def adminRole = new AuthRole(authority: 'ROLE_ADMIN').save(flush: true)
+        def superAdminRole = new AuthRole(authority: 'ROLE_SUPERADMIN').save(flush: true)
 		def userRole = new AuthRole(authority: 'ROLE_USER').save(flush: true)
 
-		def testUser = new AuthUser(username: 'admin', enabled: true, password: 'password').save(flush: true)
+		def adminUser = new AuthUser(username: 'admin', enabled: true, password: 'password').save(flush: true)
+        def testSuperAdmin = new AuthUser(username: 'superadmin', enabled: true, password: 'password').save(flush: true)
 
-		AuthUserAuthRole.create testUser, adminRole, true
+		AuthUserAuthRole.create adminUser, adminRole, true
+        AuthUserAuthRole.create testSuperAdmin, superAdminRole, true
 
-		def moduleControls = [
-			routingMc : new ModuleControl(
-			className: routing.control.RoutingModuleControl.class.getName(),
-			slug: 'routing'
-			),
-			authMc : new ModuleControl(
-			className: routing.control.auth.AuthModuleControl.class.getName(),
-			slug: 'auth'
-			),
-		]
-		moduleControls*.value*.save();
+        def moduleControls = [
+                routingMc: new ModuleControl(
+                        className: routing.control.RoutingModuleControl.class.getName(),
+                        slug: 'routing'
+                ),
+                authMc: new ModuleControl(
+                        className: routing.control.auth.AuthModuleControl.class.getName(),
+                        slug: 'auth'
+                ),
+        ]
+        moduleControls*.value*.save();
 
 
-		def pageTypes = [
-			homepagePageType : new PageType(
-			slug : 'homepage',
-			description: 'Homepage',
-			singleton: true,
-			templateName: '/routing/front/homepage',
-			moduleControls: moduleControls*.value,
-			registeredCalls : []),
+        def pageTypes = [
+                homepagePageType: new PageType(
+                        slug: 'homepage',
+                        description: 'Homepage',
+                        singleton: true,
+                        templateName: '/routing/front/homepage',
+                        moduleControls: moduleControls*.value,
+                        registeredCalls: []),
 
-			adminHomepagePageType : new PageType(
-			slug : authModuleControl.adminHomepageSlug,
-			description: 'Admin article page',
-			singleton: true,
-			templateName: '/routing/admin/homepage',
-			moduleControls: moduleControls*.value,
-			registeredCalls : [],
-			),
+                adminHomepagePageType: new PageType(
+                        slug: authModuleControl.adminHomepageSlug,
+                        description: 'Admin article page',
+                        singleton: true,
+                        templateName: '/routing/admin/homepage',
+                        moduleControls: moduleControls*.value,
+                        registeredCalls: [],
+                ),
 
-			loginPageType : new PageType(
-			slug : authModuleControl.loginSlug,
-			description: 'Admin login page',
-			singleton: true,
-			templateName: '/routing/admin/login',
-			moduleControls: moduleControls*.value,
-			registeredCalls : []),
+                adminSuperadminTestPageType: new PageType(
+                        slug: 'superadmin_pagetype',
+                        description: 'Admin superadmin page type',
+                        singleton: true,
+                        templateName: '/routing/admin/superadmin',
+                        moduleControls: moduleControls*.value,
+                        registeredCalls: [],
+                ),
 
-			doLoginPageType : new PageType(
-			slug : authModuleControl.doLoginSlug,
-			description: 'Admin confirm login',
-			singleton: true,
-			templateName: '/routing/admin/do-login',
-			moduleControls: moduleControls*.value,
-			registeredCalls : new RegisteredCall(
-			moduleControl: moduleControls['authMc'],
-			methodName: 'doLogin'
-			),
-			),
-		]
-		pageTypes*.value*.save();
-		def pages = [
-			homepage : new Page(
-			host: defaultHost,
-			urlPart: '/',
-			urlType: UrlTypeEnum.FROM_PARENT,
-			requestType: RequestTypeEnum.REGULAR,
-			httpMethod: HttpMethodEnum.GET,
-			pageType: pageTypes.homepagePageType
-			),
+                notEnoughPrivilegesPageType: new PageType(
+                        slug: authModuleControl.notEnoughPrivilegesSlug,
+                        description: 'Admin superadmin page type',
+                        singleton: true,
+                        templateName: '/routing/admin/notEnoughPrivileges',
+                        moduleControls: moduleControls*.value,
+                        registeredCalls: [],
+                ),
 
-			adminHomepage : new Page(
-			host: defaultHost,
-			urlPart: '/admin',
-			urlType: UrlTypeEnum.FROM_PARENT,
-			requestType: RequestTypeEnum.REGULAR,
-			httpMethod: HttpMethodEnum.GET,
-			pageType: pageTypes.adminHomepagePageType,
-			authRoles: adminRole
-			),
-		]
-		pages['adminLogin'] = new Page(
-				parent: pages.adminHomepage,
-				urlPart: '/login',
-				pageType: pageTypes.loginPageType,
-				authRoles: []);
-		pages['adminDoLogin'] = new Page(
-				parent: pages.adminHomepage,
-				urlPart: '/do-login',
-				httpMethod: HttpMethodEnum.POST,
-				pageType: pageTypes.doLoginPageType,
-				authRoles: []);
-		pages*.value*.save();
-		return [pages: pages, pageTypes: pageTypes, moduleControls: moduleControls]
-	}
+                loginPageType: new PageType(
+                        slug: authModuleControl.loginSlug,
+                        description: 'Admin login page',
+                        singleton: true,
+                        templateName: '/routing/admin/login',
+                        moduleControls: moduleControls*.value,
+                        registeredCalls: []),
+
+                doLoginPageType: new PageType(
+                        slug: authModuleControl.doLoginSlug,
+                        description: 'Admin confirm login',
+                        singleton: true,
+                        templateName: '/routing/admin/do-login',
+                        moduleControls: moduleControls*.value,
+                        registeredCalls: new RegisteredCall(
+                                moduleControl: moduleControls['authMc'],
+                                methodName: 'doLogin'
+                        ),
+                ),
+
+                logoutPageType: new PageType(
+                        slug: authModuleControl.logoutSlug,
+                        description: 'Admin logout',
+                        singleton: true,
+                        templateName: '/routing/admin/logout',
+                        moduleControls: moduleControls*.value,
+                        registeredCalls: new RegisteredCall(
+                                moduleControl: moduleControls['authMc'],
+                                methodName: 'doLogout'
+                        ),
+                ),
+        ]
+        pageTypes*.value*.save();
+        def pages = [
+                homepage: new Page(
+                        host: defaultHost,
+                        urlPart: '/',
+                        urlType: UrlTypeEnum.FROM_PARENT,
+                        requestType: RequestTypeEnum.REGULAR,
+                        httpMethod: HttpMethodEnum.GET,
+                        pageType: pageTypes.homepagePageType
+                ),
+
+                adminHomepage: new Page(
+                        host: defaultHost,
+                        urlPart: '/admin',
+                        urlType: UrlTypeEnum.FROM_PARENT,
+                        requestType: RequestTypeEnum.REGULAR,
+                        httpMethod: HttpMethodEnum.GET,
+                        pageType: pageTypes.adminHomepagePageType,
+                        authRoles: [adminRole, superAdminRole]
+                ),
+                notEnoughPrivilegesPage: new Page(
+                        host: defaultHost,
+                        urlPart: '/not-enough-privileges',
+                        urlType: UrlTypeEnum.FROM_PARENT,
+                        requestType: RequestTypeEnum.REGULAR,
+                        httpMethod: HttpMethodEnum.GET,
+                        pageType: pageTypes.notEnoughPrivilegesPageType,
+                        authRoles: []
+                ),
+                logoutPage: new Page(
+                        host: defaultHost,
+                        urlPart: '/logout',
+                        urlType: UrlTypeEnum.FROM_PARENT,
+                        requestType: RequestTypeEnum.REGULAR,
+                        httpMethod: HttpMethodEnum.GET,
+                        pageType: pageTypes.logoutPageType,
+                        authRoles: []
+                ),
+        ]
+        pages['adminLogin'] = new Page(
+                parent: pages.adminHomepage,
+                urlPart: '/login',
+                pageType: pageTypes.loginPageType,
+                authRoles: []);
+        pages['adminDoLogin'] = new Page(
+                parent: pages.adminHomepage,
+                urlPart: '/do-login',
+                httpMethod: HttpMethodEnum.POST,
+                pageType: pageTypes.doLoginPageType,
+                authRoles: []);
+        pages['superadmin'] = new Page(
+                parent: pages.adminHomepage,
+                urlPart: '/superadmin',
+                pageType: pageTypes.adminSuperadminTestPageType,
+                authRoles: [superAdminRole]);
+        pages*.value*.save();
+        return [pages: pages, pageTypes: pageTypes, moduleControls: moduleControls]
+    }
 }
