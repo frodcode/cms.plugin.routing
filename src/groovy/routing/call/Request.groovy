@@ -7,6 +7,8 @@ class Request implements Map {
 
 	def params;
 
+    def session = [:]
+
 	public def getHeader(String headerName) {
 		return full.getHeader(headerName)
 	}

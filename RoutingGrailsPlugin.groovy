@@ -1,4 +1,7 @@
-import domain.routing.*;
+import domain.routing.*
+import routing.example.control.TaskModuleControl
+import routing.example.control.TaskModuleControl
+import routing.example.control.ArticleModuleControl;
 
 class RoutingGrailsPlugin {
     // the plugin version
@@ -62,8 +65,8 @@ Brief summary/description of the plugin.
 			authService = ref('authService');
 			routingService = ref('routingService');
 		}
-		'example.NewsModuleControl'(example.NewsModuleControl)
-		'example.ArticleModuleControl'(example.ArticleModuleControl)
+		'routing.example.NewsModuleControl'(TaskModuleControl)
+		'routing.example.control.ArticleModuleControl'(ArticleModuleControl)
     }
 
     def doWithDynamicMethods = { ctx ->

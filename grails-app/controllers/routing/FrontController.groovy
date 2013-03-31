@@ -45,7 +45,7 @@ class FrontController {
 		}
 
 		def callViewModels = []
-		callViewModels += callExecutor.executeCalls(applicationContext, page, request, params);
+		callViewModels += callExecutor.executeCalls(applicationContext, page, request, params, session);
 		if (callViewModels) {
 			callViewModels*.response.each {
 				if (it.redirects) {

@@ -4,7 +4,7 @@
 // by Gant (such as 'baseDir' which points on project base dir). You can
 // use 'ant' to access a global instance of AntBuilder
 //
-// For example you can create directory under project tree:
+// For routing.example you can create directory under project tree:
 //
 //    ant.mkdir(dir:"${basedir}/grails-app/jobs")
 //

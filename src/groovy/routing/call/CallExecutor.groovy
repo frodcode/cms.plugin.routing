@@ -7,13 +7,13 @@ import routing.domain.Page
 
 class CallExecutor {
 
-	public def executeCalls(ApplicationContext applicationContext, Page page, controllerRequest, controllerParams) {
+	public def executeCalls(ApplicationContext applicationContext, Page page, controllerRequest, controllerParams, def session) {
 		def callViewModels = []
 		page.pageType.registeredCalls.each { moduleCall ->
 			def callViewModel = new CallViewModel();
 
 			def moduleControl = applicationContext.getBean(moduleCall.moduleControl.className);
-			def moduleRequest = this.getRequestFor(moduleCall.moduleControl, controllerRequest, controllerParams);
+			def moduleRequest = this.getRequestFor(moduleCall.moduleControl, controllerRequest, controllerParams, session);
 			def moduleResponse = new Response()
 			def vars = moduleControl.{
 						moduleCall.methodName
@@ -35,7 +35,7 @@ class CallExecutor {
 		return callViewModels
 	}
 
-	private def getRequestFor(ModuleControl moduleControl, controllerRequest, controllerParams) {
+	private def getRequestFor(ModuleControl moduleControl, controllerRequest, controllerParams, def session) {
 		def requestParams = [:]
 		controllerParams.each { key, value ->
 			def idParam = moduleControl.slug + '_';
@@ -45,7 +45,7 @@ class CallExecutor {
 			}
 		}
 
-		def newRequest = new Request(full: controllerRequest, params: requestParams);
+		def newRequest = new Request(full: controllerRequest, params: requestParams, session: session);
 		return newRequest;
 	}
 }
