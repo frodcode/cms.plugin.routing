@@ -45,13 +45,18 @@ class FrontController {
 		}
 
 		def callViewModels = []
-		callViewModels += callExecutor.executeCalls(applicationContext, page, request, params);
+        if (!session.mc) {
+            session.mc = [:]
+        }
+		callViewModels += callExecutor.executeCalls(applicationContext, page, request, params, session.mc);
 		if (callViewModels) {
 			callViewModels*.response.each {
 				if (it.redirects) {
 					redirect(uri: it.redirects[0])
 				}
-				flash.messages = it.flashes
+                if (it.flashes) {
+				    flash.messages = it.flashes
+                }
 			}
 		}
 		def viewModel = [:]
@@ -61,6 +66,7 @@ class FrontController {
 			}
 			viewModel[mc.slug]['mc'] = applicationContext.getBean(mc.className)
 			viewModel[mc.slug]['vars'] = getAllVarsForModuleControl(callViewModels, mc.slug)
+            viewModel[mc.slug]['session'] = session.mc
 		}
 
 		viewModel['page'] = page

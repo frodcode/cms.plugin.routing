@@ -31,7 +31,17 @@ class RoutingTagLib {
 		out << g.textField(attrs+myAttrs)
 	}
 
-	/**
+    def hiddenField = { attrs, body ->
+        def moduleControls = attrs.controls
+        def name = attrs.name
+        def nameString = getElementName(moduleControls, name);
+        def myAttrs = [name: nameString, id: name, value: attrs.value]
+
+        out << g.hiddenField(attrs+myAttrs)
+    }
+
+
+    /**
 	 * @attr page|singleton
 	 * @attr params
 	 */

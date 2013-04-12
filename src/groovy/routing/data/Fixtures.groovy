@@ -44,7 +44,6 @@ class Fixtures {
         ]
         moduleControls*.value*.save();
 
-
         def pageTypes = [
                 homepagePageType: new PageType(
                         slug: 'homepage',

@@ -1,4 +1,4 @@
-package example
+package routing.example.control
 
 class ArticleModuleControl {
 

@@ -2,6 +2,7 @@ import org.codehaus.groovy.grails.commons.ApplicationAttributes
 
 import routing.data.Fixtures
 import routing.domain.Host
+import routing.data.ExampleData
 
 class BootStrap {
 	def init = { servletContext ->
@@ -10,5 +11,6 @@ class BootStrap {
 		defaultHost.save(failOnError:true)
 
 		def fixtures = Fixtures.load(ctx, defaultHost)
+        def exampleData = ExampleData.load(ctx, defaultHost, fixtures)
 	}
 }
