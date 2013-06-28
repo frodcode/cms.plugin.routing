@@ -14,3 +14,4 @@ alter table registered_call_call_param drop constraint FK94D6BC30F8AACDAB [42102
 org.h2.jdbc.JdbcSQLException: Tabulka "REGISTERED_CALL_CALL_PARAM" nenalezena
 Table "REGISTERED_CALL_CALL_PARAM" not found; SQL statement:
 alter table registered_call_call_param drop constraint FK94D6BC3075618F49 [42102-164]
+#

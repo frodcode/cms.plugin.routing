@@ -3,7 +3,7 @@ dataSource {
     //driverClassName = "org.h2.Driver"
 	//username = "sa"
 	//password = ""
-	
+
 	driverClassName = "org.postgresql.Driver"
 	username = "postgres"
 	password = "root"

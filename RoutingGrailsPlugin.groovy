@@ -1,7 +1,5 @@
-import domain.routing.*
-import routing.example.control.TaskModuleControl
-import routing.example.control.TaskModuleControl
-import routing.example.control.ArticleModuleControl;
+import frod.routing.service.AuthService
+import frod.routing.service.RoutingService
 
 class RoutingGrailsPlugin {
     // the plugin version
@@ -22,7 +20,7 @@ class RoutingGrailsPlugin {
     def description = '''\
 Brief summary/description of the plugin.
 '''
-	
+
 
     // URL to the plugin's documentation
     def documentation = "http://grails.org/plugin/routing"
@@ -49,29 +47,11 @@ Brief summary/description of the plugin.
     }
 
     def doWithSpring = {
-		authService(routing.AuthService) {
+		authService(AuthService) {
 			authenticationManager = ref('authenticationManager')
 		}
-        aclService(routing.auth.AclService) {
-            routingService = ref('routingService');
-        }
 
-        routingService(routing.RoutingService)	
-		callExecutor(routing.call.CallExecutor) 
-		'routing.control.RoutingModuleControl'(routing.control.RoutingModuleControl) {
-			routingService = ref('routingService');
-		}
-		//authModuleControl(routing.control.auth.AuthModuleControl)
-		'routing.control.auth.AuthModuleControl'(routing.control.auth.AuthModuleControl) {
-			authService = ref('authService');
-			routingService = ref('routingService');
-		}
-		'routing.example.NewsModuleControl'(TaskModuleControl)
-		'routing.example.control.ArticleModuleControl'(ArticleModuleControl)
-        'routing.example.control.TaskModuleControl'(TaskModuleControl) {
-            taskService = ref('taskService')
-            routingService = ref('routingService');
-        }
+        routingService(RoutingService)
     }
 
     def doWithDynamicMethods = { ctx ->
@@ -95,6 +75,6 @@ Brief summary/description of the plugin.
 
     def onShutdown = { event ->
         // TODO Implement code that is executed when the application shuts down (optional)
-    }	
-	
+    }
+
 }

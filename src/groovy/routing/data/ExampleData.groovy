@@ -1,136 +1,66 @@
 package routing.data
 
-import routing.domain.ModuleControl
-import routing.domain.PageType
-import routing.example.control.TaskModuleControl
-import routing.domain.RegisteredCall
-import routing.domain.Page
-import routing.domain.UrlTypeEnum
-import routing.domain.RequestTypeEnum
-import routing.domain.HttpMethodEnum
+import ford.routing.domain.PageType
+import ford.routing.domain.Page
+import ford.routing.domain.UrlTypeEnum
+import ford.routing.domain.RequestTypeEnum
+import ford.routing.domain.HttpMethodEnum
+import ford.routing.domain.auth.AuthRole
+import ford.routing.domain.auth.AuthUser
+import ford.routing.domain.auth.AuthUserAuthRole
 
 class ExampleData {
 
     public static def load(def ctx, def defaultHost, def fixturesData) {
-        TaskModuleControl taskModuleControl = ctx.'routing.example.control.TaskModuleControl'
+        def adminRole = new AuthRole(authority: 'ROLE_ADMIN').save(flush: true)
+        def superAdminRole = new AuthRole(authority: 'ROLE_SUPERADMIN').save(flush: true)
+        def userRole = new AuthRole(authority: 'ROLE_USER').save(flush: true)
 
-        def moduleControls = [
-                taskModuleControl: new ModuleControl(
-                        className: routing.example.control.TaskModuleControl.class.getName(),
-                        slug: 'routing_example_task'
-                ),
-        ]
-        moduleControls*.value*.save();
+        def adminUser = new AuthUser(username: 'admin', enabled: true, password: 'password').save(flush: true)
+        def testSuperAdmin = new AuthUser(username: 'superadmin', enabled: true, password: 'password').save(flush: true)
 
-        def allModuleControls = moduleControls*.value + fixturesData.moduleControls*.value
-
+        AuthUserAuthRole.create adminUser, adminRole, true
+        AuthUserAuthRole.create testSuperAdmin, superAdminRole, true
         def pageTypes = [
                 frontTaskListPageType: new PageType(
-                        slug: taskModuleControl.frontListSlug,
+                        slug: 'task_list',
                         description: 'Task list on front',
                         singleton: false,
-                        templateName: '/routing/example/front/list',
-                        moduleControls: allModuleControls,
-                        registeredCalls: []),
-                adminTaskListPageType: new PageType(
-                        slug: taskModuleControl.adminListSlug,
-                        description: 'Task list in admin',
+                        controller: 'Task',
+                        action: 'list'),
+                homepagePageType: new PageType(
+                        slug: 'homepage',
+                        description: 'Homepage',
                         singleton: true,
-                        templateName: '/routing/example/admin/list',
-                        moduleControls: allModuleControls,
-                        parent: fixturesData.pageTypes.adminHomepagePageType,
-                        registeredCalls: [
-                            new RegisteredCall(moduleControl: moduleControls['taskModuleControl'], methodName: 'getTaskList')
-                        ]),
-                adminTaskEditPageType: new PageType(
-                        slug: taskModuleControl.adminEditSlug,
-                        description: 'Task edit in admin',
-                        singleton: true,
-                        templateName: '/routing/example/admin/edit',
-                        moduleControls: allModuleControls,
-                        parent: fixturesData.pageTypes.adminHomepagePageType,
-                        registeredCalls: []),
-                adminTaskAddPageType: new PageType(
-                        slug: taskModuleControl.adminAddSlug,
-                        description: 'Task add in admin',
-                        singleton: true,
-                        templateName: '/routing/example/admin/add',
-                        moduleControls: allModuleControls,
-                        parent: fixturesData.pageTypes.adminHomepagePageType,
-                        registeredCalls: []),
-                adminTaskDoEditPageType: new PageType(
-                        slug: taskModuleControl.adminDoEditSlug,
-                        description: 'Task do edit in admin',
-                        singleton: true,
-                        templateName: '/routing/example/admin/edit',
-                        moduleControls: allModuleControls,
-                        parent: fixturesData.pageTypes.adminHomepagePageType,
-                        registeredCalls: [
-                                new RegisteredCall(moduleControl: moduleControls['taskModuleControl'], methodName: 'edit')
-                        ]),
-                adminTaskDoDeletePageType: new PageType(
-                        slug: taskModuleControl.adminDoDeleteSlug,
-                        description: 'Task delete in admin',
-                        singleton: true,
-                        templateName: '/routing/example/admin/list',
-                        moduleControls: allModuleControls,
-                        parent: fixturesData.pageTypes.adminHomepagePageType,
-                        registeredCalls: [
-                                new RegisteredCall(moduleControl: moduleControls['taskModuleControl'], methodName: 'delete')
-                        ]),
+                        controller: 'Index',
+                        action: 'index'),
         ]
 
         pageTypes*.value*.save();
 
         def pages = [
-                adminTaskListPage: new Page(
-                        host: defaultHost,
-                        urlPart: '/task-list',
-                        urlType: UrlTypeEnum.FROM_PARENT,
+                homepage: new Page(
+                        domain: defaultHost,
+                        urlPart: '/',
+                        urlType: UrlTypeEnum.ROOT,
                         requestType: RequestTypeEnum.REGULAR,
                         httpMethod: HttpMethodEnum.GET,
-                        pageType: pageTypes.adminTaskListPageType,
-                ),
-
-                adminTaskEditPage: new Page(
-                        host: defaultHost,
-                        urlPart: '/edit',
-                        urlType: UrlTypeEnum.FROM_PARENT,
-                        requestType: RequestTypeEnum.REGULAR,
-                        httpMethod: HttpMethodEnum.GET,
-                        pageType: pageTypes.adminTaskEditPageType
-                ),
-
-                adminTaskAddPage: new Page(
-                        host: defaultHost,
-                        urlPart: '/add',
-                        urlType: UrlTypeEnum.FROM_PARENT,
-                        requestType: RequestTypeEnum.REGULAR,
-                        httpMethod: HttpMethodEnum.GET,
-                        pageType: pageTypes.adminTaskAddPageType
-                ),
-
-                adminTaskDoEditPage: new Page(
-                        host: defaultHost,
-                        urlPart: '/do-edit',
-                        urlType: UrlTypeEnum.FROM_PARENT,
-                        requestType: RequestTypeEnum.REGULAR,
-                        httpMethod: HttpMethodEnum.POST,
-                        pageType: pageTypes.adminTaskDoEditPageType
-                ),
-
-                adminTaskDoDeletePage: new Page(
-                        host: defaultHost,
-                        urlPart: '/do-delete',
-                        urlType: UrlTypeEnum.FROM_PARENT,
-                        requestType: RequestTypeEnum.REGULAR,
-                        httpMethod: HttpMethodEnum.POST,
-                        pageType: pageTypes.adminTaskDoDeletePageType
+                        pageType: pageTypes.homepagePageType
                 ),
         ]
 
+        pages.taskListPage = new Page(
+                domain: defaultHost,
+                urlPart: '/task-list',
+                urlType: UrlTypeEnum.FROM_PARENT,
+                requestType: RequestTypeEnum.REGULAR,
+                httpMethod: HttpMethodEnum.GET,
+                pageType: pageTypes.frontTaskListPageType,
+                parent: pages.homepage,
+        )
+
         pages*.value*.save();
 
-        return [pages: pages, pageTypes: pageTypes, moduleControls: moduleControls]
+        return [pages: pages, pageTypes: pageTypes]
     }
 }

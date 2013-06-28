@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Routing.iml" filepath="$PROJECT_DIR$/Routing.iml" />
       <module fileurl="file://$PROJECT_DIR$/Routing-grailsPlugins.iml" filepath="$PROJECT_DIR$/Routing-grailsPlugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Routing-inplacePlugin.iml" filepath="$PROJECT_DIR$/Routing-inplacePlugin.iml" />
     </modules>
   </component>
 </project>
