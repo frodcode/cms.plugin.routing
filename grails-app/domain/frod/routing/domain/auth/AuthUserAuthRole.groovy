@@ -1,4 +1,4 @@
-package ford.routing.domain.auth
+package frod.routing.domain.auth
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 

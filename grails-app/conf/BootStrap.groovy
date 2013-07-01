@@ -2,7 +2,7 @@ import org.codehaus.groovy.grails.commons.ApplicationAttributes
 
 import routing.data.Fixtures
 import routing.data.ExampleData
-import ford.routing.domain.Domain
+import frod.routing.domain.Domain
 
 class BootStrap {
 	def init = { servletContext ->

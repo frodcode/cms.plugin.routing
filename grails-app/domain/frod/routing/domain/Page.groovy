@@ -1,6 +1,6 @@
-package ford.routing.domain
+package frod.routing.domain
 
-import ford.routing.domain.auth.AuthRole
+import frod.routing.domain.auth.AuthRole
 
 class Page {
 
@@ -43,8 +43,6 @@ class Page {
         subPages(nullable: true)
         url(unique: ['httpMethod', 'requestType'])
         langPart(nullable: true)
-        httpMethod(defaultValue: HttpMethodEnum.GET)
-        requestType(defaultValue: RequestTypeEnum.REGULAR)
     }
 
     public String getLinkFrom(Page page) {
@@ -141,15 +139,27 @@ class Page {
 		}
 	}
 
-	def beforeValidate() {
-		println this.urlPart
-		println 'before validate'
-		println this.httpMethod
-        regenerateUrl()
-        dump(this)
-	}
+    def beforeValidate() {
+        println this.urlPart
+        println 'before validate'
+        println this.httpMethod
 
-	def beforeInsert() {
+        if (!domain && parent) {
+            domain = parent.domain
+        }
+        if (!urlType) {
+            urlType = UrlTypeEnum.FROM_PARENT
+        }
+        if (!requestType) {
+            requestType = RequestTypeEnum.REGULAR
+        }
+        if (!httpMethod) {
+            httpMethod = HttpMethodEnum.GET
+        }
+        regenerateUrl()
+    }
+
+    def beforeInsert() {
 		checkValues()
 	}
 

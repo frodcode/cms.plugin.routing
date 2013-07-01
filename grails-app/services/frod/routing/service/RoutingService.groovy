@@ -2,11 +2,11 @@ package frod.routing.service
 
 import javax.servlet.http.HttpServletRequest
 
-import ford.routing.domain.HttpMethodEnum
-import ford.routing.domain.Page
-import ford.routing.domain.PageType
-import ford.routing.domain.RequestTypeEnum
-import ford.routing.domain.Domain
+import frod.routing.domain.HttpMethodEnum
+import frod.routing.domain.Page
+import frod.routing.domain.PageType
+import frod.routing.domain.RequestTypeEnum
+import frod.routing.domain.Domain
 
 
 class RoutingService {

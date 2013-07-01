@@ -1,11 +1,11 @@
 package frod.routing.service
 
-import ford.routing.domain.UrlTypeEnum
-import ford.routing.domain.HttpMethodEnum
-import ford.routing.domain.RequestTypeEnum
-import ford.routing.domain.Page
-import ford.routing.domain.PageType
-import ford.routing.domain.Domain
+import frod.routing.domain.UrlTypeEnum
+import frod.routing.domain.HttpMethodEnum
+import frod.routing.domain.RequestTypeEnum
+import frod.routing.domain.Page
+import frod.routing.domain.PageType
+import frod.routing.domain.Domain
 
 /**
  * User: freeman
@@ -43,7 +43,7 @@ class PageCommand {
         return Page.get(parentId)
     }
 
-    public Page getDomain() {
+    public Domain getDomain() {
         return Domain.get(domainId)
     }
 

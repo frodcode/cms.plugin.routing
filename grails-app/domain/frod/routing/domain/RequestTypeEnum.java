@@ -1,4 +1,4 @@
-package ford.routing.domain;
+package frod.routing.domain;
 
 public enum RequestTypeEnum {
 

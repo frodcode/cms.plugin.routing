@@ -1,13 +1,14 @@
 package routing.data
 
-import ford.routing.domain.PageType
-import ford.routing.domain.Page
-import ford.routing.domain.UrlTypeEnum
-import ford.routing.domain.RequestTypeEnum
-import ford.routing.domain.HttpMethodEnum
-import ford.routing.domain.auth.AuthRole
-import ford.routing.domain.auth.AuthUser
-import ford.routing.domain.auth.AuthUserAuthRole
+import frod.routing.domain.PageType
+import frod.routing.domain.Page
+import frod.routing.domain.UrlTypeEnum
+import frod.routing.domain.RequestTypeEnum
+import frod.routing.domain.HttpMethodEnum
+import frod.routing.domain.auth.AuthRole
+import frod.routing.domain.auth.AuthUser
+import frod.routing.domain.auth.AuthUserAuthRole
+import frod.routing.domain.example.Task
 
 class ExampleData {
 
@@ -34,6 +35,12 @@ class ExampleData {
                         singleton: true,
                         controller: 'Index',
                         action: 'index'),
+                frontTaskDetailPageType: new PageType(
+                        slug: 'task_detail',
+                        description: 'Task detail on front',
+                        singleton: false,
+                        controller: 'Task',
+                        action: 'detail'),
         ]
 
         pageTypes*.value*.save();
@@ -61,6 +68,35 @@ class ExampleData {
 
         pages*.value*.save();
 
-        return [pages: pages, pageTypes: pageTypes]
+        def tasks = [
+                createRouting: new Task(
+                        name: 'Vytvořit routování',
+                        page: new Page(
+                                urlPart: '/vytvorit-routovani',
+                                pageType: pageTypes.frontTaskDetailPageType,
+                                parent: pages.homepage
+                        )
+                ),
+                buyServer: new Task(
+                        name: 'Pořídit server',
+                        page: new Page(
+                                urlPart: '/poridit-server',
+                                pageType: pageTypes.frontTaskDetailPageType,
+                                parent: pages.homepage
+                        )
+                ),
+                testApplication: new Task(
+                        name: 'Otestovat aplikaci',
+                        page: new Page(
+                                urlPart: '/otestovat-aplikaci',
+                                pageType: pageTypes.frontTaskDetailPageType,
+                                parent: pages.homepage
+                        )
+                )
+        ]
+        tasks*.value*.page*.save(flush: true, failOnError: true)
+        tasks*.value*.save(failOnError: true)
+
+        return [pages: pages, pageTypes: pageTypes, tasks: tasks]
     }
 }

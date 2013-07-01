@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 
-import ford.routing.domain.auth.AuthUser
+import frod.routing.domain.auth.AuthUser
 
 class AuthService {
 

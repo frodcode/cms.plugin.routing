@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: freeman
-  Date: 28.6.13
-  Time: 11:55
+  Date: 1.7.13
+  Time: 21:50
   To change this template use File | Settings | File Templates.
 --%>
 
@@ -12,6 +12,10 @@
   <title></title>
 </head>
 <body>
-<r:link page="${taskListPage}">Seznam úkolů</r:link>
+<h1>Deatil pro task s id ${task.id}</h1>
+<div>
+    <p>${task.name}</p>
+    <p>${task.done ? 'hotovo' : 'chybí'}</p>
+</div>
 </body>
 </html>

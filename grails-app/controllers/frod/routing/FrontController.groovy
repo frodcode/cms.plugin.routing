@@ -1,6 +1,6 @@
 package frod.routing
 
-import ford.routing.domain.Page
+import frod.routing.domain.Page
 import frod.routing.service.RoutingService
 
 class FrontController {
@@ -30,9 +30,8 @@ class FrontController {
             }
 		}
         def forwardParams = [controller: page.pageType.controller.toLowerCase(), action: page.pageType.action.toLowerCase(), params: [pageId: page.id]]
+
         forward(forwardParams)
-
 	}
-
 
 }
