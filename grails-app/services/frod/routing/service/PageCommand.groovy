@@ -13,6 +13,9 @@ import frod.routing.domain.Domain
  */
 @grails.validation.Validateable
 class PageCommand {
+
+    Integer pageId
+
     String urlPart
 
     String langPart
@@ -33,6 +36,12 @@ class PageCommand {
         // todo dodelat
         importFrom Page
         pageTypeId(validator: {val, obj -> obj.getPageType() != null})
+        pageId(nullable: true, validator: { val, obj ->
+            if (obj.pageId) {
+                return !!Page.get(obj.pageId)
+            }
+            return true;
+        })
     }
 
     public PageType getPageType() {
@@ -45,6 +54,13 @@ class PageCommand {
 
     public Domain getDomain() {
         return Domain.get(domainId)
+    }
+
+    public Page getPage() {
+        if (!pageId) {
+            throw new IllegalStateException('Cannot get page because no id is available')
+        }
+        return Page.get(pageId)
     }
 
 }

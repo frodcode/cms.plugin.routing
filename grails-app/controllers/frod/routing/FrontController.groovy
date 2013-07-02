@@ -2,6 +2,7 @@ package frod.routing
 
 import frod.routing.domain.Page
 import frod.routing.service.RoutingService
+import frod.routing.domain.Redirect
 
 class FrontController {
 
@@ -16,6 +17,10 @@ class FrontController {
 	def route() {
 		Page page = routingService.findPageByRequest(this.request);
 		if (!page) {
+            Redirect redirectObj = routingService.findRedirect(this.request)
+            if (redirectObj) {
+                return redirect(url: redirectObj.toUrl)
+            }
             throw new IllegalArgumentException('Cannot find page by params ' + this.request.getParameterMap() + ' and method ' + this.request.getMethod() + ' on url ' + this.request.forwardURI)
         }
         if (!routingService.getCompleteUrl(request).equals(page.url) && !page.isRoot()) {

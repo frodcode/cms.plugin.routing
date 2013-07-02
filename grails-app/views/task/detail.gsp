@@ -16,6 +16,7 @@
 <div>
     <p>${task.name}</p>
     <p>${task.done ? 'hotovo' : 'chybí'}</p>
+    <p><r:link singleton="task_list">Zpět</r:link> </p>
 </div>
 </body>
 </html>

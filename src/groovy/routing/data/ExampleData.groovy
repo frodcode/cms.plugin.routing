@@ -26,7 +26,7 @@ class ExampleData {
                 frontTaskListPageType: new PageType(
                         slug: 'task_list',
                         description: 'Task list on front',
-                        singleton: false,
+                        singleton: true,
                         controller: 'Task',
                         action: 'list'),
                 homepagePageType: new PageType(

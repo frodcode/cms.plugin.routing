@@ -7,12 +7,16 @@ import frod.routing.domain.Page
 import frod.routing.domain.PageType
 import frod.routing.domain.RequestTypeEnum
 import frod.routing.domain.Domain
+import frod.routing.domain.Redirect
 
 
 class RoutingService {
 
 	public String getCompleteUrl(HttpServletRequest requestObject) {
 		def url = (requestObject.scheme + "://" + requestObject.serverName + ":" + requestObject.serverPort + requestObject.forwardURI).trim()
+        if (!isRootPage(requestObject) && url.charAt(url.length()-1) == '/') {
+            url = url[0..-2]
+        }
         return url;
 	}
 
@@ -47,10 +51,6 @@ class RoutingService {
 
 	public Page findPageByRequest(HttpServletRequest requestObject) {
         def url = getCompleteUrl(requestObject)
-
-        if (!isRootPage(requestObject) && url.charAt(url.length()-1) == '/') {
-            url = url[0..-2]
-        }
 		def page = Page.find("FROM Page as p INNER JOIN FETCH p.pageType pt WHERE p.url = :url AND p.httpMethod = :httpMethod AND p.requestType = :requestType",
 				[url: url, httpMethod: getHttpMethodByRequest(requestObject), requestType: getRequestTypeByRequest(requestObject)])
 		return page
@@ -67,4 +67,30 @@ class RoutingService {
 	public PageType getSingletonType(String type) {
 		return PageType.findBySlug(type)
 	}
+
+    public void tryCreateRedirect(String oldUrl, String newUrl)
+    {
+        if (oldUrl != newUrl) {
+            Redirect redirect
+            redirect = Redirect.findByFromUrl(oldUrl)
+            if (!redirect) {
+                redirect = new Redirect(fromUrl: oldUrl, permanent: true)
+            }
+            def loopingRedirects = Redirect.find {
+                toUrl == oldUrl
+            }
+            loopingRedirects*.toUrl = newUrl
+            redirect.toUrl = newUrl
+            loopingRedirects*.save()
+            redirect.save(flush: true)
+        }
+    }
+
+    public Redirect findRedirect(HttpServletRequest requestObject)
+    {
+        def url = getCompleteUrl(requestObject)
+        return Redirect.findByFromUrl(url)
+
+    }
+
 }

@@ -15,8 +15,9 @@ class TaskAdminController {
         return [task: Task.get(params.id)]
     }
 
-    def doEdit() {
-
+    def doEdit(PageCommand pageCommand, TaskCommand taskCommand) {
+        taskService.edit(pageCommand, taskCommand)
+        redirect(action: 'list')
     }
 
     def list() {

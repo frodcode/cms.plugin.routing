@@ -8,8 +8,6 @@ class Redirect {
 
     Boolean permanent
 
-
-
     static constraints = {
         permanent(defaultValue: true)
     }
