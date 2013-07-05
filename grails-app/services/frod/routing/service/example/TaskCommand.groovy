@@ -11,6 +11,8 @@ import frod.routing.service.PageCommand
 @grails.validation.Validateable
 class TaskCommand {
 
+    PageCommand pageCommand = new PageCommand()
+
     Integer taskId
 
     String name

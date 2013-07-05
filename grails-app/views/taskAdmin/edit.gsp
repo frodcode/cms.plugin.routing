@@ -23,15 +23,15 @@
 </head>
 <body>
 <g:form controller="taskAdmin" action="${task ? 'doEdit' : 'doCreate'}" method="post">
-    <label for="parentId">Rodič</label><g:select name="parentId" from="${Page.list()}" value="${task?.page?.parentId}" optionKey="id" optionValue="fullUrlPart"/><br/>
-    <label for="urlType">Typ adresy</label><g:select name="urlType" from="${['Od rodiče', 'Od domovské stránky']}" keys="${[UrlTypeEnum.FROM_PARENT, UrlTypeEnum.FROM_ROOT]}"/><br/>
-    <label for="pageTypeId">Typ stránky</label><g:select name="pageTypeId" from="${PageType.list()}" optionKey="id" optionValue="description"/><br/>
-    <label for="domainId">Doména</label><g:select name="domainId" from="${Domain.list()}" optionKey="id" optionValue="url" /> <br/>
-    <label for="urlPart">Adresa</label><g:textField name="urlPart" value="${task?.page?.urlPart}" /><br/>
-    <label for="langPart">Jazykový prefix</label><g:textField name="langPart" value="${task?.page?.langPart}"/><br/>
-    <label for="requestType">Typ požadavku</label><g:select name="requestType" from="${['Normální', 'Ajax']}" keys="${[RequestTypeEnum.REGULAR, RequestTypeEnum.AJAX]}"/><br/>
-    <label for="httpMethod">Typ požadavku</label><g:select name="httpMethod" from="${['GET', 'POST', 'PUT']}" keys="${[HttpMethodEnum.GET, HttpMethodEnum.POST, HttpMethodEnum.PUT]}"/><br/>
-    <g:hiddenField name="pageId" value="${task?.page.id}" />
+    <label for="pageCommand.parentId">Rodič</label><g:select name="pageCommand.parentId" from="${Page.list()}" value="${task?.page?.parentId}" optionKey="id" optionValue="fullUrlPart"/><br/>
+    <label for="pageCommand.urlType">Typ adresy</label><g:select name="pageCommand.urlType" from="${['Od rodiče', 'Od domovské stránky']}" keys="${[UrlTypeEnum.FROM_PARENT, UrlTypeEnum.FROM_ROOT]}"/><br/>
+    <label for="pageCommand.pageTypeId">Typ stránky</label><g:select name="pageCommand.pageTypeId" from="${PageType.list()}" optionKey="id" optionValue="description"/><br/>
+    <label for="pageCommand.domainId">Doména</label><g:select name="pageCommand.domainId" from="${Domain.list()}" optionKey="id" optionValue="url" /> <br/>
+    <label for="pageCommand.urlPart">Adresa</label><g:textField name="pageCommand.urlPart" value="${task?.page?.urlPart}" /><br/>
+    <label for="pageCommand.langPart">Jazykový prefix</label><g:textField name="pageCommand.langPart" value="${task?.page?.langPart}"/><br/>
+    <label for="pageCommand.requestType">Typ požadavku</label><g:select name="pageCommand.requestType" from="${['Normální', 'Ajax']}" keys="${[RequestTypeEnum.REGULAR, RequestTypeEnum.AJAX]}"/><br/>
+    <label for="pageCommand.httpMethod">Typ požadavku</label><g:select name="pageCommand.httpMethod" from="${['GET', 'POST', 'PUT']}" keys="${[HttpMethodEnum.GET, HttpMethodEnum.POST, HttpMethodEnum.PUT]}"/><br/>
+    <g:hiddenField name="pageCommand.pageId" value="${task?.page?.id}" />
     <g:hiddenField name="taskId" value="${task?.id}" />
 
     <label for="name">Název úkolu</label><g:textField name="name" value="${task?.name}"/>

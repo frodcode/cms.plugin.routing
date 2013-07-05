@@ -15,8 +15,8 @@ class TaskAdminController {
         return [task: Task.get(params.id)]
     }
 
-    def doEdit(PageCommand pageCommand, TaskCommand taskCommand) {
-        taskService.edit(pageCommand, taskCommand)
+    def doEdit(TaskCommand taskCommand) {
+        taskService.edit(taskCommand)
         redirect(action: 'list')
     }
 
@@ -28,8 +28,8 @@ class TaskAdminController {
         return new ModelAndView("/taskAdmin/edit", [:])
     }
 
-    def doCreate(PageCommand pageCommand, TaskCommand taskCommand) {
-        taskService.create(pageCommand, taskCommand)
+    def doCreate(TaskCommand taskCommand) {
+        taskService.create(taskCommand)
         redirect(action: 'list')
     }
 
