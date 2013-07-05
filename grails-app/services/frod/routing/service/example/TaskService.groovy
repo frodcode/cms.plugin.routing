@@ -5,6 +5,8 @@ import frod.routing.service.PageService
 import frod.routing.domain.Page
 import frod.routing.domain.example.Task
 
+import org.codehaus.groovy.grails.web.binding.DataBindingUtils;
+
 class TaskService {
 
     PageService pageService
@@ -12,8 +14,7 @@ class TaskService {
     def create(TaskCommand taskCommand) {
         Page page = pageService.createPage(taskCommand.pageCommand)
         Task task = new Task()
-        bindData(task, taskCommand, [exclude: 'task'])
-//        task.properties = taskCommand.properties
+        DataBindingUtils.bindObjectToInstance(task, taskCommand, [], ['task'], null)
         task.page = page
         task.save(flush: true)
     }

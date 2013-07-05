@@ -84,6 +84,9 @@ class Page {
     }
 
     private void checkValues() {
+        if (!urlPart) {
+            throw new IllegalStateException('Url part is required even for homepages - must be at least "/"')
+        }
         if (!parent && urlType != UrlTypeEnum.ROOT) {
             throw new ParentNotFoundException(sprintf('You must define parent if you want to use automatic property filling by parent. Caused byt urlPart "%s"', urlPart))
         }
@@ -124,13 +127,20 @@ class Page {
 	private void regenerateUrlFromRoot() {
 		this.url = ''
 		Page root = getRoot()
-		url += root.domain.getUrl() + getRootLangPart() + root.urlPart + urlPart
+
+		url += root.domain.getUrl() + getRootLangPart() + root.urlPart
+        url = url[0..-2]
+        url += urlPart
         for (Page child in subPages) {
             child.regenerateUrl();
         }
 	}
 
 	public void regenerateUrl() {
+        if (!domain && !parent) {
+            throw new IllegalStateException('You must define eather domain or parent. Cannot resolve this situation automatically')
+        }
+
 		if (urlType == UrlTypeEnum.FROM_PARENT || urlType == UrlTypeEnum.ROOT) {
 			regenerateUrlFromParent()
 		}

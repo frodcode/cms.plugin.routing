@@ -24,16 +24,15 @@ class PageCommand {
 
     Long pageTypeId
 
-    HttpMethodEnum httpMethod
+    HttpMethodEnum httpMethod = HttpMethodEnum.GET
 
-    RequestTypeEnum requestType
+    RequestTypeEnum requestType = RequestTypeEnum.REGULAR
 
     Long parentId
 
     Long domainId
 
     static constraints = {
-        // todo dodelat
         importFrom Page
         pageTypeId(validator: {val, obj -> obj.getPageType() != null})
         pageId(nullable: true, validator: { val, obj ->
