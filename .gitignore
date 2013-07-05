@@ -24,3 +24,8 @@ stacktrace.log
 /*.tmproj
 /ivy*
 /eclipse
+
+/Routing-grailsPlugins.iml
+/Routing-inplacePlugin.iml
+/Routing.iml
+
